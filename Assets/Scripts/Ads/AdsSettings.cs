@@ -1,9 +1,9 @@
 using AppodealStack.Monetization.Common;
 using UnityEngine;
 
-namespace Modules.Ads.Settings
+namespace Modules.Ads
 {
-    [CreateAssetMenu(menuName = nameof(Settings) + "/" + nameof(AdsSettings), fileName = nameof(AdsSettings))]
+    [CreateAssetMenu(menuName = "Settings/" + nameof(AdsSettings), fileName = nameof(AdsSettings))]
     public class AdsSettings : ScriptableObject
     {
         [field: SerializeField] public bool Testing { get; private set; }

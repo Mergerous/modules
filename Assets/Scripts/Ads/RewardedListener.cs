@@ -1,7 +1,6 @@
 using System;
 using AppodealStack.Monetization.Common;
 
-
 namespace Modules.Ads
 {
     public class RewardedListener : IRewardedVideoAdListener
