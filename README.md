@@ -3,6 +3,10 @@
 ```
 https://github.com/Mergerous/modules.git?path=Assets/Scripts/Data
 ```
+### Modules.Audio:
+```
+https://github.com/Mergerous/modules.git?path=Assets/Scripts/Audio
+```
 ### Modules.Views:
 ```
 https://github.com/Mergerous/modules.git?path=Assets/Scripts/Views
