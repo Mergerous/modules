@@ -111,6 +111,31 @@ namespace Modules.States
 
             stack.Push(item);
         }
+        
+        public void Close<T>(StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0)
+            where T : IState
+        {
+            if (options.HasFlag(StateOptions.LinkWithLastOnStack))
+            {
+                if (orderedStates.TryGetValue(layer, out Stack<IState> stack) && stack.Count > 0)
+                {
+                    IState statable = stack.Peek();
+                    if (linkedStates.TryGetValue(statable, out HashSet<IState> linked))
+                    {
+                        foreach (IState linkedState in linked)
+                        {
+                            if (linkedState.GetType() == typeof(T))
+                            {
+                                linkedState.Close();
+                                linked.Remove(linkedState);
+                                statable.OnLinkedStateClosed();
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         public void Close(string key, StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0)
         {
