@@ -27,3 +27,7 @@ https://github.com/Mergerous/modules.git?path=Assets/Scripts/Debugging
 ```
 https://github.com/Mergerous/modules.git?path=Assets/Scripts/Ads
 ```
+### Modules.Vibrations:
+```
+https://github.com/Mergerous/modules.git?path=Assets/Scripts/Vibrations
+```
