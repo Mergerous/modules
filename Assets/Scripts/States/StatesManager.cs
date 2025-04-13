@@ -31,6 +31,23 @@ namespace Modules.States
             return this;
         }
 
+        public StatesManager Open<T>(StateOptions options = StateOptions.ClosePreviousAndAddToStack) 
+            where T : IState
+        {
+            T state = states.OfType<T>().First();
+            Open(state, options);
+            return this;
+        }
+        
+        public StatesManager Open<T, TPayload>(TPayload payload, StateOptions options = StateOptions.ClosePreviousAndAddToStack) 
+            where T : IState<TPayload>
+        {
+            T state = states.OfType<T>().First();
+            state.Payload = payload;
+            Open(state, options);
+            return this;
+        }
+
         public StatesManager Open<T>(string key, StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0, T arguments = default)
         {
             if (states.TryGetValue(key, out IState item) && item is IState<T> argumentItem)
