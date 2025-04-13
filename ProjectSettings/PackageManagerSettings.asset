@@ -33,6 +33,7 @@ MonoBehaviour:
     m_Scopes:
     - com.google
     - com.github-glitchenzo
+    - com.github
     m_IsDefault: 0
     m_Capabilities: 0
     m_ConfigSource: 4
