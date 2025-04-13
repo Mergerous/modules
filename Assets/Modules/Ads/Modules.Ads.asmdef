@@ -1,0 +1,17 @@
+{
+    "name": "Modules.Ads",
+    "rootNamespace": "",
+    "references": [
+        "GUID:4e20c7306599b442b84e265cb179eddc",
+        "GUID:1f613da493e88413786955ac61fc9673"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
