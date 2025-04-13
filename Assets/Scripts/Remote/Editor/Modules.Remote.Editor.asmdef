@@ -1,0 +1,23 @@
+{
+    "name": "Modules.Configurations.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:ad171846d806ee44f871b0ad49f5e8c6",
+        "GUID:7974410ed817a404fb609dfec4f9b5e7",
+        "GUID:1723440b455cb0340a3d24f828acfdde",
+        "GUID:0acc523941302664db1f4e527237feb3"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "MODULES_REMOTE"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
