@@ -1,0 +1,28 @@
+using System;
+
+namespace Modules.UI.Views
+{
+    public sealed class ViewHandle
+    {
+        private event Func<string, View> onCreate;
+        private event Action<View> onDestroy;
+        private readonly string key;
+        
+        private View view;
+        
+        public View View => view ??= onCreate?.Invoke(key);
+
+        public ViewHandle(string key, Func<string, View> onCreate, Action<View> onDestroy)
+        {
+            this.key = key;
+            this.onCreate = onCreate;
+            this.onDestroy = onDestroy;
+        }
+
+        public void DestroyView()
+        {
+            onDestroy?.Invoke(view);
+            view = default;
+        }
+    }
+}
