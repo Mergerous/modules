@@ -1,11 +1,6 @@
-using System;
-using System.Reflection;
-using Modules.Remote.Attributes;
+#if ODIN_INSPECTOR
 using Sirenix.OdinInspector.Editor;
-using Sirenix.Utilities.Editor;
-using UnityEditor;
-using UnityEditor.UIElements;
-using UnityEngine;
+#endif
 using Object = UnityEngine.Object;
 
 namespace Modules.Remote.Editor

@@ -2,9 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Modules.Common.Editor;
-using Modules.Remote.Attributes;
-using Modules.Remote.Settings;
 using Newtonsoft.Json;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
@@ -28,8 +25,7 @@ namespace Modules.Remote.Editor
             {
                 JsonLibrary target = (JsonLibrary)serializedObject.targetObject;
                 Dictionary<string, string> dictionary = target.Defaults
-                    .ToDictionary(json => json.GetType()
-                        .GetCustomAttribute<AddToRemoteAttribute>().searchName, JsonUtility.ToJson);
+                    .ToDictionary(json => json.GetType().GetCustomAttribute<AddToRemoteAttribute>().searchName, JsonUtility.ToJson);
                 EditorGUIUtility.systemCopyBuffer = JsonConvert.SerializeObject(dictionary);
             };
 
@@ -64,7 +60,7 @@ namespace Modules.Remote.Editor
                     SerializedProperty prop = arrayProperty.GetArrayElementAtIndex(index);
                     Type type = prop.managedReferenceValue.GetType();
                     AddToRemoteAttribute attribute = type.GetCustomAttribute<AddToRemoteAttribute>();
-                    EditorHelper.DrawHorizontal(rect,
+                    DrawHorizontal(rect,
                         labelRect =>
                         {
                             EditorGUI.LabelField(labelRect, attribute.searchName);
@@ -103,6 +99,17 @@ namespace Modules.Remote.Editor
             root.Add(container);
 
             return root;
+        }
+        
+        private static void DrawHorizontal(Rect rect, params Action<Rect>[] callbacks)
+        {
+            float width = rect.width;
+            rect.width /= callbacks.Length;
+            foreach (Action<Rect> callback in callbacks)
+            {
+                callback?.Invoke(rect);
+                rect.x += width / callbacks.Length;
+            }
         }
     }
 }
