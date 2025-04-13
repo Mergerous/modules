@@ -33,3 +33,7 @@ https://github.com/Mergerous/modules.git?path=Assets/Scripts/Ads
 ```
 https://github.com/Mergerous/modules.git?path=Assets/Scripts/Vibrations
 ```
+### Modules.Remote:
+```
+https://github.com/Mergerous/modules.git?path=Assets/Scripts/Remote
+```
