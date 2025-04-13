@@ -1,18 +1,10 @@
 using System;
-using Modules.UI.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Common.Views
+namespace Modules.Views
 {
-    [Flags]
-    public enum GraphicStateOptions
-    {
-        None  = 0,
-        Color = 1 << 0,
-    }
-
     [Serializable]
     public abstract class GraphicStateComponent<T> : BehaviourStateComponent<T> where T : Graphic
     {

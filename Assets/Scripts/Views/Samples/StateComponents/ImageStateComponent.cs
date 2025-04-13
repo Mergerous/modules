@@ -1,18 +1,10 @@
 using System;
-using Common.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Modules.UI.Views.States
+namespace Modules.Views
 {
-    [Flags]
-    public enum ImageStateOptions
-    {
-        None   = 0,
-        Sprite = 1 << 0,
-    }
-    
     [Serializable]
     public sealed class ImageStateComponent : GraphicStateComponent<Image>
     {

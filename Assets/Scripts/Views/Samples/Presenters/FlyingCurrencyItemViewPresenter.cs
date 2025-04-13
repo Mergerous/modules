@@ -1,10 +1,10 @@
 using System;
 using DG.Tweening;
 using JetBrains.Annotations;
-using Modules.UI.Views;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-namespace Common.Views
+namespace Modules.Views
 {
     [UsedImplicitly]
     public sealed class FlyingCurrencyItemViewPresenter : IDisposable
@@ -28,9 +28,11 @@ namespace Common.Views
         public Tweener DoMove(Vector3 sourcePosition, Vector3 destinationPosition)
         {
             MovementElement movementElement = view.GetElement<MovementElement>("movement");
-            float speed = movementElement.SpeedRange.GetRandom();
-            float deviation = movementElement.XMovementDeviationRange.GetRandom();
+
+            float speed = Random.Range(movementElement.SpeedRange.x, movementElement.SpeedRange.y);
+            float deviation =  Random.Range(movementElement.XMovementDeviationRange.x, movementElement.XMovementDeviationRange.y);
             RectTransform viewTransform = view.GetComponent<RectTransform>();
+            
             return DOVirtual.Float(0f, 1f, speed, t =>
             {
                 viewTransform.position = Vector3.Lerp(sourcePosition, destinationPosition, t) +

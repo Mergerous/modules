@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Modules.UI.Views
+namespace Modules.Views
 {
     [Serializable]
     public abstract class Element : IDisposable

@@ -1,10 +1,9 @@
 using System;
 using DG.Tweening;
-using Modules.UI.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Samples
+namespace Modules.Views
 {
     [Serializable]
     public sealed class DOTweenAnimationStateComponent : StateComponent

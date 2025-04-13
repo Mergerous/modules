@@ -1,6 +1,6 @@
 using System;
 
-namespace Modules.UI.Views
+namespace Modules.Views
 {
     public sealed class ViewHandle
     {

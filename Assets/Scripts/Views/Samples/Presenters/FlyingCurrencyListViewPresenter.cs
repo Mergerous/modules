@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using JetBrains.Annotations;
-using Modules.UI.Views;
 using UnityEngine;
 
-namespace Common.Views
+namespace Modules.Views
 {
     [UsedImplicitly]
     public sealed class FlyingCurrencyListViewPresenter 

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Modules.UI.Views;
 using UnityEngine;
 
 namespace Modules.Views

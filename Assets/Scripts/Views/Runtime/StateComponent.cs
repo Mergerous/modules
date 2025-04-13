@@ -1,6 +1,6 @@
 using System;
 
-namespace Modules.UI.Views
+namespace Modules.Views
 {
     [Serializable]
     public abstract class StateComponent

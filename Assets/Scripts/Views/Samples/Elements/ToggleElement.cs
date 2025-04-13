@@ -3,7 +3,7 @@ using R3;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Modules.UI.Views
+namespace Modules.Views
 {
     [UsedImplicitly]
     public sealed class ToggleElement : Element

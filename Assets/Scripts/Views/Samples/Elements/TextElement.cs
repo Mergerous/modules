@@ -2,7 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 
-namespace Modules.UI.Views
+namespace Modules.Views
 {
     [Serializable]
     public class TextElement : Element

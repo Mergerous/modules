@@ -3,7 +3,7 @@ using R3;
 using TMPro;
 using UnityEngine;
 
-namespace Modules.UI.Views
+namespace Modules.Views
 {
     [UsedImplicitly]
     public sealed class InputFieldElement : Element

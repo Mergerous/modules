@@ -1,16 +1,8 @@
-using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Modules.UI.Views
+namespace Modules.Views
 {
-    [Flags]
-    public enum BehaviourStateOptions
-    {
-        None    = 0,
-        Enabled = 1 << 0
-    }
-    
     public abstract class BehaviourStateComponent<T> : StateComponent 
         where T : Behaviour
     {

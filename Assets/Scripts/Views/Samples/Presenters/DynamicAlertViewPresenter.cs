@@ -1,9 +1,8 @@
 using DG.Tweening;
 using JetBrains.Annotations;
-using Modules.UI.Views;
 using UnityEngine;
 
-namespace Modules.UI
+namespace Modules.Views
 {
     [UsedImplicitly]
     public sealed class DynamicAlertViewPresenter

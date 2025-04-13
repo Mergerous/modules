@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Modules.UI.Views
+namespace Modules.Views
 {
     [Serializable]
     public class ImageElement : Element

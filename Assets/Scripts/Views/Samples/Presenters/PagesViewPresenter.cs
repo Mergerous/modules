@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Modules.UI.Views;
 using R3;
-using Shop.Views;
 
-namespace Modules.UI
+namespace Modules.Views
 {
     [UsedImplicitly]
     public sealed class PagesViewPresenter
@@ -32,7 +30,6 @@ namespace Modules.UI
             TabPresenter tabPresenter = factory();
             tabPresenter.Initialize(tabKey, tabView);
             
-            // TODO ADD DISPOSABLE, MAKE STATIC
             tabPresenter.OnClicked
                 .Select(isOn => (isOn, presenter: SelectPage<T>(tabKey, isOn)))
                 .Where(tuple => tuple.isOn)

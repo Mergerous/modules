@@ -1,4 +1,4 @@
-namespace Common.Views
+namespace Modules.Views
 {
     public enum CustomToggleState
     {

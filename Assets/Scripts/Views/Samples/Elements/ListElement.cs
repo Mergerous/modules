@@ -4,7 +4,7 @@ using Modules.Views;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Modules.UI.Views
+namespace Modules.Views
 {
     [Serializable]
     public sealed class ListElement : Element

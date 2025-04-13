@@ -1,42 +1,38 @@
-using System;
 using JetBrains.Annotations;
-using Modules.UI.Views;
+using R3;
 
-namespace Common.Views
+namespace Modules.Views
 {
     [UsedImplicitly]
-    public sealed class CustomToggleViewPresenter : IDisposable
+    public sealed class CustomToggleViewPresenter : Presenter
     {
-        public event Action<bool> OnValueChanged; 
-        
         private const string TOGGLE_KEY = "toggle";
         
+        private readonly Subject<bool> valueChangedSubject = new();
         private readonly View view;
+
+        public Observable<bool> ValueChangedObservable => valueChangedSubject;
 
         public CustomToggleViewPresenter(View view)
         {
             this.view = view;
         }
 
-        public void Initialize()
+        public override void Subscribe()
         {
-            view.GetElement<ToggleElement>(TOGGLE_KEY).Subscribe(SetValueInternal);
-        }
-        
-        public void Dispose()
-        {
-            view.GetElement<ToggleElement>(TOGGLE_KEY).Unsubscribe(SetValueInternal);
+            base.Subscribe();
+            view.GetElement<ToggleElement>(TOGGLE_KEY).IsOnObservable
+                .Subscribe(isOn =>
+                {
+                    view.SetState(isOn ? CustomToggleState.On : CustomToggleState.Off);
+                    valueChangedSubject.OnNext(isOn);
+                })
+                .AddTo(disposables);
         }
 
         public void SetValue(bool isOn)
         {
             view.GetElement<ToggleElement>(TOGGLE_KEY).SetValue(isOn);
-        }
-
-        private void SetValueInternal(bool isOn)
-        {
-            view.SetState(isOn ? CustomToggleState.On : CustomToggleState.Off);
-            OnValueChanged?.Invoke(isOn);
         }
     }
 }

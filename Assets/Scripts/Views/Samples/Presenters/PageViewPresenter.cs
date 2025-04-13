@@ -1,7 +1,6 @@
 using JetBrains.Annotations;
-using Modules.UI.Views;
 
-namespace Shop.Views
+namespace Modules.Views
 {
     public enum PageState
     {

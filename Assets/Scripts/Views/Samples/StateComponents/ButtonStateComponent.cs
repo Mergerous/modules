@@ -3,7 +3,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Modules.UI.Views
+namespace Modules.Views
 {
     [Flags]
     public enum ButtonStateOptions

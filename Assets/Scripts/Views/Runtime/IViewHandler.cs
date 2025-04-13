@@ -1,4 +1,4 @@
-namespace Modules.UI.Views
+namespace Modules.Views
 {
     public interface IViewHandler
     {

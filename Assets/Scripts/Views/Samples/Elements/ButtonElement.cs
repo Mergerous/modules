@@ -4,7 +4,7 @@ using R3;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Modules.UI.Views
+namespace Modules.Views
 {
     [UsedImplicitly, Serializable]
     public sealed class ButtonElement : Element
