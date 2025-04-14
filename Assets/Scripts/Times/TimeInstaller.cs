@@ -20,7 +20,7 @@ namespace Modules.Time
             
             // Models
             //
-            builder.Register<TimeManager>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<TimeModel>(Lifetime.Singleton).AsImplementedInterfaces();
             
             // Data
             //
