@@ -1,0 +1,15 @@
+{
+  "name": "com.mergerous.modules-times",
+  "version": "1.4.1",
+  "displayName": "Modules.Times",
+  "description": "This is a times package",
+  "unity": "6000.0",
+  "unityRelease": "23f1",
+  "documentationUrl": "https://example.com/",
+  "changelogUrl": "https://example.com/changelog.html",
+  "licensesUrl": "https://example.com/licensing.html",
+  "author": {
+    "name": "Mergerous",
+    "url": "https://github.com/Mergerous"
+  }
+}
