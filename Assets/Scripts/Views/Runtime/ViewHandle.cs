@@ -21,6 +21,10 @@ namespace Modules.Views
 
         public void Dispose()
         {
+            if (view == default)
+            {
+                return;
+            }
             onDestroy?.Invoke(view);
             view = default;
         }
