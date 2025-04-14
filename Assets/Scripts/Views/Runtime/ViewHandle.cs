@@ -2,7 +2,7 @@ using System;
 
 namespace Modules.Views
 {
-    public sealed class ViewHandle
+    public sealed class ViewHandle : IDisposable
     {
         private event Func<string, View> onCreate;
         private event Action<View> onDestroy;
@@ -19,7 +19,7 @@ namespace Modules.Views
             this.onDestroy = onDestroy;
         }
 
-        public void DestroyView()
+        public void Dispose()
         {
             onDestroy?.Invoke(view);
             view = default;

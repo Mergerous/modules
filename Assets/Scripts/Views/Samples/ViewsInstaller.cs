@@ -18,13 +18,11 @@ namespace Modules.Views
                 .WithParameter(settings)
                 .WithParameter(container);
 
-            builder.RegisterFactory(CreateViewFactory, Lifetime.Singleton);
-        }
-        
-        private Func<string, Cache<View>> CreateViewFactory(IObjectResolver container)
-        {
-            ViewsManager viewsManager = container.Resolve<ViewsManager>();
-            return key => new Cache<View>(() => viewsManager.CreateView(key), view => viewsManager.DestroyView(view));
+            builder.RegisterFactory<string, ViewHandle>(container =>
+            {
+                ViewsManager viewsManager = container.Resolve<ViewsManager>();
+                return key => new ViewHandle(key, viewsManager.CreateView, viewsManager.DestroyView);
+            }, Lifetime.Singleton);
         }
     }
 }
