@@ -1,6 +1,6 @@
 using System;
 
-namespace Views.Samples
+namespace Modules.Views
 {
     public sealed class Cache<T> : IDisposable
     {

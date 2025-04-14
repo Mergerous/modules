@@ -4,7 +4,7 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-namespace Views.Samples
+namespace Modules.Views
 {
     [Serializable]
     public sealed class ViewsInstaller : IInstaller
