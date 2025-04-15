@@ -1,6 +1,10 @@
 # About
 Modules is an open-source library that enables rapid game and project development in Unity. Inside, you can find tools for working with data, UI, sounds, cameras, and much more.
 # Installation
+
+You can install Modules using the package manager.
+Select UPM -> Install package from git URL -> Insert the desired link
+
 ### Modules.Data:
 ```
 https://github.com/Mergerous/modules.git?path=Assets/Scripts/Data
