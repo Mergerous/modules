@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.appodeal.mediation": "https://github.com/appodeal/appodeal-unity-plugin-upm.git#v3.5.1",
+    "com.appodeal.mediation": "https://github.com/appodeal/appodeal-unity-plugin-upm.git#v3.5.2",
     "com.github-glitchenzo.nugetforunity": "4.3.0",
     "com.github.lofelt.nicevibrations": "4.1.203",
     "com.google.external-dependency-manager": "1.2.185",

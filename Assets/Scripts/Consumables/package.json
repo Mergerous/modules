@@ -1,16 +1,13 @@
 {
-  "name": "com.mergerous.modules-vibrations",
+  "name": "com.mergerous.modules-consumables",
   "version": "1.0.0",
-  "displayName": "Modules.Vibrations",
+  "displayName": "Modules.Consumables",
   "description": "This is an example package",
   "unity": "6000.0",
   "unityRelease": "23f1",
   "documentationUrl": "https://example.com/",
   "changelogUrl": "https://example.com/changelog.html",
   "licensesUrl": "https://example.com/licensing.html",
-  "dependencies": {
-    "com.github.lofelt.nicevibrations": "4.1.203"
-  },
   "author": {
     "name": "Mergerous",
     "url": "https://github.com/Mergerous"
