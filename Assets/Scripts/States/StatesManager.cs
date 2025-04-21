@@ -12,13 +12,21 @@ namespace Modules.States
         private Dictionary<int, Stack<IState>> orderedStates;
         private Dictionary<IState, HashSet<IState>> linkedStates;
         private Dictionary<string, IState> states;
+        private IEnumerable<IState> statesList;
 
-        public void Initialize(IEnumerable<IState> statables)
+        public void Initialize(IEnumerable<IState> states)
         {
             nonOrderedStates = new Dictionary<int,HashSet<IState>>();
             orderedStates = new Dictionary<int, Stack<IState>>();
             linkedStates = new Dictionary<IState, HashSet<IState>>();
-            states = statables.ToDictionary(state => state.GetKey(), state => state);
+            statesList = states;
+            foreach (IState state in states)
+            {
+                if (state.TryGetKey(out string key))
+                {
+                    this.states.Add(key, state);
+                }
+            }
         }
         
         public StatesManager Open(string key, StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0)
@@ -34,7 +42,7 @@ namespace Modules.States
         public StatesManager Open<T>(StateOptions options = StateOptions.ClosePreviousAndAddToStack) 
             where T : IState
         {
-            T state = states.OfType<T>().First();
+            T state = statesList.OfType<T>().First();
             Open(state, options);
             return this;
         }
@@ -42,7 +50,7 @@ namespace Modules.States
         public StatesManager Open<T, TPayload>(TPayload payload, StateOptions options = StateOptions.ClosePreviousAndAddToStack) 
             where T : IState<TPayload>
         {
-            T state = states.OfType<T>().First();
+            T state = statesList.OfType<T>().First();
             state.Payload = payload;
             Open(state, options);
             return this;
