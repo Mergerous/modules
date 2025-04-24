@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Modules.Views
 {
     public abstract class Presenter
     {
         protected readonly ICollection<IDisposable> disposables = new List<IDisposable>();
+        protected readonly CancellationTokenSource cancellationTokenSource;
 
         public virtual void Subscribe()
         {
@@ -20,6 +22,8 @@ namespace Modules.Views
             }
 
             disposables.Clear();
+            
+            cancellationTokenSource.Dispose();
         }
     }
 }
