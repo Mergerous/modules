@@ -1,18 +1,20 @@
-using JetBrains.Annotations;
+using System;
 using R3;
 using TMPro;
 using UnityEngine;
 
 namespace Modules.Views
 {
-    [UsedImplicitly]
+    [Serializable]
     public sealed class InputFieldElement : Element
     {
-        private readonly Subject<string> onSubmitSubject= new();
+        private readonly Subject<string> onSubmitSubject = new();
         
         [SerializeField] private TMP_InputField inputField;
 
         public Observable<string> OnSubmitObservable => onSubmitSubject;
+
+        public string Text => inputField.text;
 
         public void SetText(string text)
         {

@@ -20,7 +20,8 @@ namespace Modules.Views
         [SerializeField] private List<Template> templates;
         [SerializeField] private Transform content;
         
-        public View this[int i] => instances[i];
+        public IReadOnlyList<View> Instances => instances;
+        public Transform Content => content;
 
         public View CreateInstance(string key)
         {

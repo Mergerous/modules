@@ -19,6 +19,11 @@ namespace Modules.Views
             this.onDestroy = onDestroy;
         }
 
+        public void Initialize()
+        {
+            view ??= onCreate?.Invoke(key);
+        }
+
         public void Dispose()
         {
             if (view == default)
