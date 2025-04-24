@@ -1,69 +1,38 @@
 using System.Collections.Generic;
+using System.Linq;
 using Firebase.Analytics;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Modules.Analytics
 {
-    public class AnalyticsManager
+    [UsedImplicitly]
+    public sealed class AnalyticsManager
     {
-        public AnalyticsManager()
+        public void TrackEvent(string eventName)
         {
+            FirebaseAnalytics.LogEvent(eventName);
+            Debug.Log($"LOG_EVENT {eventName}");
         }
 
-        public void Register(IAnalysable source)
+        public void TrackEvent(string eventName, string parameterName, object obj)
         {
-            source.OnEventTracked += TrackEvent;
+            TrackEvent(eventName, parameterName, JsonConvert.SerializeObject(obj));
         }
 
-
-        public void Unregister(IAnalysable source)
+        public void TrackEvent(string eventName, string parameterName, string json)
         {
-            source.OnEventTracked -= TrackEvent;
-        }
-        
-        public void TrackEvent(string key, AnalyticsArguments arguments)
-        {
-            switch (arguments.type)
-            {
-                case TrackEventType.Object:
-                    TrackEvent(key, arguments.obj);
-                    break;
-                case TrackEventType.Json:
-                    TrackEvent(key, arguments.json);
-                    break;
-                case TrackEventType.Parameters:
-                    TrackEvent(key, arguments.parameters);
-                    break;
-                default:
-                    TrackEvent(key);
-                    break;
-            }
+            FirebaseAnalytics.LogEvent(eventName, parameterName, json);
+            Debug.Log($"LOG_EVENT {eventName} {json}");
         }
 
-        public void TrackEvent(string name)
+        public void TrackEvent(string eventName, Dictionary<string, object> dict)
         {
-            FirebaseAnalytics.LogEvent(name);
-            // _appMetrica.ReportEvent(name);
-            Debug.Log($"LOG_EVENT {name}");
-        }
-
-        public void TrackEvent(string name, object obj)
-        {
-            TrackEvent(name, JsonConvert.SerializeObject(obj));
-        }
-
-        public void TrackEvent(string name, string json)
-        {
-            // FirebaseAnalytics.LogEvent(name, );
-            // _appMetrica.ReportEvent(name, json);
-            Debug.Log($"LOG_EVENT {name} {json}");
-        }
-
-        public void TrackEvent(string name, Dictionary<string, object> dict)
-        {
-            // _appMetrica.ReportEvent(name, dict);
-            Debug.Log($"LOG_EVENT {name} {JsonConvert.SerializeObject(dict, Formatting.Indented)}");
+            FirebaseAnalytics.LogEvent(eventName, dict
+                .Select(pair => new Parameter(pair.Key, JsonConvert.SerializeObject(pair.Value)))
+                .ToArray());
+            Debug.Log($"LOG_EVENT {eventName} {JsonConvert.SerializeObject(dict, Formatting.Indented)}");
         }
     }
 }

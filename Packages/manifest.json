@@ -4,6 +4,8 @@
     "com.github-glitchenzo.nugetforunity": "4.3.0",
     "com.github.lofelt.nicevibrations": "4.1.203",
     "com.google.external-dependency-manager": "1.2.185",
+    "com.google.firebase.analytics": "file:../Assets/Scripts/Analytics/com.google.firebase.analytics-12.0.0.tgz",
+    "com.google.firebase.app": "file:../Assets/Scripts/Analytics/com.google.firebase.app-12.0.0.tgz",
     "com.unity.cinemachine": "3.1.3",
     "com.unity.collab-proxy": "2.7.1",
     "com.unity.feature.2d": "2.0.1",
@@ -55,7 +57,8 @@
       "scopes": [
         "com.google",
         "com.github-glitchenzo",
-        "com.github"
+        "com.github",
+        "com.homemade.google.firebase"
       ],
       "overrideBuiltIns": false
     }
