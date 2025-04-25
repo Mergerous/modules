@@ -8,17 +8,12 @@ namespace Modules.States
     [UsedImplicitly]
     public sealed class StatesManager
     {
-        private Dictionary<int, HashSet<IState>> nonOrderedStates;
-        private Dictionary<int, Stack<IState>> orderedStates;
-        private Dictionary<IState, HashSet<IState>> linkedStates;
+        private Dictionary<int, StateMachine> machines;
         private Dictionary<string, IState> states;
         private IEnumerable<IState> statesList;
 
         public void Initialize(IEnumerable<IState> states)
         {
-            nonOrderedStates = new Dictionary<int,HashSet<IState>>();
-            orderedStates = new Dictionary<int, Stack<IState>>();
-            linkedStates = new Dictionary<IState, HashSet<IState>>();
             statesList = states;
             foreach (IState state in states)
             {
@@ -27,6 +22,16 @@ namespace Modules.States
                     this.states.Add(key, state);
                 }
             }
+        }
+
+        public StateMachine GetMachine(int index)
+        {
+            if (!machines.TryGetValue(index, out StateMachine machine))
+            {
+                machines.Add(index, machine = new StateMachine());
+            }
+
+            return machine;
         }
         
         public StatesManager Open(string key, StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0)
@@ -39,20 +44,20 @@ namespace Modules.States
             return this;
         }
 
-        public StatesManager Open<T>(StateOptions options = StateOptions.ClosePreviousAndAddToStack) 
+        public StatesManager Open<T>(StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0) 
             where T : IState
         {
             T state = statesList.OfType<T>().First();
-            Open(state, options);
+            Open(state, options, layer);
             return this;
         }
         
-        public StatesManager Open<T, TPayload>(TPayload payload, StateOptions options = StateOptions.ClosePreviousAndAddToStack) 
+        public StatesManager Open<T, TPayload>(TPayload payload, StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0) 
             where T : IState<TPayload>
         {
             T state = statesList.OfType<T>().First();
             state.Payload = payload;
-            Open(state, options);
+            Open(state, options, layer);
             return this;
         }
 
@@ -91,15 +96,15 @@ namespace Modules.States
             }
             if (options.HasFlag(StateOptions.LinkWithLastOnStack))
             {
-                if (!orderedStates.TryGetValue(layer, out Stack<IState> stack) || stack.Count <= 0)
+                if (!machines.TryGetValue(layer, out StateMachine machine) || machine.stack.Count <= 0)
                 {
                     return;
                 }
                  
-                if (!linkedStates.TryGetValue(stack.Peek(), out HashSet<IState> linked))
+                if (!machine.linkedStates.TryGetValue(machine.stack.Peek(), out HashSet<IState> linked))
                 {
                     linked = new HashSet<IState>();
-                    linkedStates.Add(stack.Peek(), linked);
+                    machine.linkedStates.Add(machine.stack.Peek(), linked);
                 }
 
                 linked.Add(item);
@@ -111,13 +116,9 @@ namespace Modules.States
 
         private void AddToStack(int layer, IState item)
         {
-            if (!orderedStates.TryGetValue(layer, out Stack<IState> stack))
-            {
-                stack = new Stack<IState>();
-                orderedStates.Add(layer, stack);
-            }
-
-            stack.Push(item);
+            StateMachine machine = GetMachine(layer);
+            
+            machine.stack.Push(item);
         }
         
         public void Close<T>(StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0)
@@ -125,10 +126,11 @@ namespace Modules.States
         {
             if (options.HasFlag(StateOptions.LinkWithLastOnStack))
             {
-                if (orderedStates.TryGetValue(layer, out Stack<IState> stack) && stack.Count > 0)
+                StateMachine machine = GetMachine(layer);
+                if (machine.stack.Count > 0)
                 {
-                    IState statable = stack.Peek();
-                    if (linkedStates.TryGetValue(statable, out HashSet<IState> linked))
+                    IState state = machine.stack.Peek();
+                    if (machine.linkedStates.TryGetValue(state, out HashSet<IState> linked))
                     {
                         foreach (IState linkedState in linked)
                         {
@@ -136,7 +138,7 @@ namespace Modules.States
                             {
                                 linkedState.Close();
                                 linked.Remove(linkedState);
-                                statable.OnLinkedStateClosed();
+                                state.OnLinkedStateClosed();
                                 break;
                             }
                         }
@@ -149,10 +151,11 @@ namespace Modules.States
         {
             if (options.HasFlag(StateOptions.LinkWithLastOnStack))
             {
-                if (orderedStates.TryGetValue(layer, out Stack<IState> stack) && stack.Count > 0)
+                StateMachine machine = GetMachine(layer);
+                if (machine.stack.Count > 0)
                 {
-                    IState statable = stack.Peek();
-                    if (linkedStates.TryGetValue(statable, out HashSet<IState> linked))
+                    IState state = machine.stack.Peek();
+                    if (machine.linkedStates.TryGetValue(state, out HashSet<IState> linked))
                     {
                         foreach (IState linkedState in linked)
                         {
@@ -161,7 +164,7 @@ namespace Modules.States
                             {
                                 linkedState.Close();
                                 linked.Remove(linkedState);
-                                statable.OnLinkedStateClosed();
+                                state.OnLinkedStateClosed();
                                 break;
                             }
                         }
@@ -172,38 +175,49 @@ namespace Modules.States
 
         public void ClearStack()
         {
-            foreach ((int layer, var stack) in orderedStates)
+            foreach ((int layer, var machine) in machines)
             {
-                foreach (var state in stack)
+                foreach (var state in machine.stack)
                 {
+                    if (machine.linkedStates.TryGetValue(state, out var linked))
+                    {
+                        foreach (var linkedState in linked)
+                        {
+                            linkedState.Close();
+                        }
+                    }
                     state.Close();
                 }
                 
-                stack.Clear();
+                machine.stack.Clear();
             }
-            
-            orderedStates.Clear();
         }
 
         private void Clear(int sourceLayer)
         {
-            foreach ((int layer, var set) in nonOrderedStates)
+            foreach ((int layer, var machine) in machines)
             {
                 if (layer >= sourceLayer)
                 {
-                    set.Clear();
-                }
-            }
-            
-            foreach ((int layer, var stack) in orderedStates)
-            {
-                if (layer >= sourceLayer && stack.TryPop(out IState statable))
-                {
-                    statable.Close();
-                    if (linkedStates.TryGetValue(statable, out HashSet<IState> set))
+                    foreach (var state in machine.stack)
                     {
-                        set.Clear();
+                        if (machine.linkedStates.TryGetValue(state, out var linked))
+                        {
+                            foreach (var linkedState in linked)
+                            {
+                                linkedState.Close();
+                            }
+                        }
+                        state.Close();
                     }
+                    foreach (var nonOrderedState in machine.nonOrderedStates)
+                    {
+                        nonOrderedState.Close();
+                    }
+                    
+                    machine.nonOrderedStates.Clear();
+                    machine.linkedStates.Clear();
+                    machine.stack.Clear();
                 }
             }
         }
@@ -211,28 +225,25 @@ namespace Modules.States
 
         private void Close(int sourceLayer)
         {
-            foreach ((int layer, var set) in nonOrderedStates)
+            foreach ((int layer, var machine) in machines)
             {
                 if (layer >= sourceLayer)
                 {
-                    foreach (IState state in set)
+                    if(machine.stack.TryPeek(out var state))
                     {
+                        if (machine.linkedStates.TryGetValue(state, out var linked))
+                        {
+                            foreach (var linkedState in linked)
+                            {
+                                linkedState.Close();
+                            }
+                        }
                         state.Close();
                     }
-                }
-            }
-            
-            foreach ((int layer, var stack) in orderedStates)
-            {
-                if (layer >= sourceLayer && stack.TryPeek(out IState statable))
-                {
-                    statable.Close();
-                    if (linkedStates.TryGetValue(statable, out HashSet<IState> set))
+                    
+                    foreach (var nonOrderedState in machine.nonOrderedStates)
                     {
-                        foreach (IState linkedState in set)
-                        {
-                            linkedState.Close();
-                        }
+                        nonOrderedState.Close();
                     }
                 }
             }
@@ -240,11 +251,13 @@ namespace Modules.States
 
         public void OpenLast(int layer = 0)
         {
-            if (orderedStates.TryGetValue(layer, out Stack<IState> stack) && stack.Count > 0)
+            StateMachine machine = GetMachine(layer);
+            
+            if (machine.stack.Count > 0)
             {
-                IState state = stack.Peek();
+                IState state = machine.stack.Peek();
                 state.Open();
-                if (linkedStates.TryGetValue(state, out HashSet<IState> set))
+                if (machine.linkedStates.TryGetValue(state, out HashSet<IState> set))
                 {
                     foreach (IState linked in set)
                     {
@@ -256,13 +269,15 @@ namespace Modules.States
 
         public bool CloseLast(int layer = 0)
         {
-            if (orderedStates.TryGetValue(layer, out var stack) && stack.Count > 0)
+            StateMachine machine = GetMachine(layer);
+            
+            if (machine.stack.Count > 0)
             {
-                IState state = stack.Pop();
+                IState state = machine.stack.Pop();
                 state.OnReturn();
                 state.Close();
 
-                if (linkedStates.TryGetValue(state, out HashSet<IState> set))
+                if (machine.linkedStates.TryGetValue(state, out HashSet<IState> set))
                 {
                     foreach (IState linked in set)
                     {
