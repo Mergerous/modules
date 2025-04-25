@@ -8,8 +8,8 @@ namespace Modules.States
     [UsedImplicitly]
     public sealed class StatesManager
     {
-        private Dictionary<int, StateMachine> machines;
-        private Dictionary<string, IState> states;
+        private Dictionary<int, StateMachine> machines = new();
+        private Dictionary<string, IState> states = new();
         private IEnumerable<IState> statesList;
 
         public void Initialize(IEnumerable<IState> states)
