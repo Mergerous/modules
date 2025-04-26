@@ -1,7 +1,7 @@
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace Settings
+namespace Modules.Settings
 {
     [UsedImplicitly]
     public sealed class PrivacyPolicySettingsProcessor : IButtonSettingsProcessor

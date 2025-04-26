@@ -2,7 +2,7 @@ using JetBrains.Annotations;
 using Modules.Views;
 using R3;
 
-namespace Settings
+namespace Modules.Settings
 {
     [UsedImplicitly]
     public sealed class SettingsButtonPresenter : Presenter

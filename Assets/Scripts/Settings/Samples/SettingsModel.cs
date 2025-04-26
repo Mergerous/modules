@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using Settings;
-using Settings.Core;
 
 namespace Modules.Settings
 {

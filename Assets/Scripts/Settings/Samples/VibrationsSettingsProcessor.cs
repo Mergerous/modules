@@ -2,8 +2,9 @@ using JetBrains.Annotations;
 using Modules.Data;
 using Modules.Settings;
 using Modules.Vibrations;
+using Settings;
 
-namespace Settings
+namespace Modules.Settings
 {
     [UsedImplicitly]
     public sealed class VibrationsSettingsProcessor : IToggleSettingsProcessor

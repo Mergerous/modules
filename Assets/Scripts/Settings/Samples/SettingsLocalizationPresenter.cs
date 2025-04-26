@@ -1,6 +1,6 @@
 using JetBrains.Annotations;
 
-namespace Settings.Localization
+namespace Modules.Settings
 {
     [UsedImplicitly]
     public sealed class SettingsLocalizationPresenter

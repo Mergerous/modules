@@ -1,6 +1,7 @@
 using System;
+using Settings;
 
-namespace Settings
+namespace Modules.Settings
 {
     [Serializable]
     public sealed class MusicSettingsData : ISettingsData

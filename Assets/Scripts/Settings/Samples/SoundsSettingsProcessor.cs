@@ -1,9 +1,8 @@
 using JetBrains.Annotations;
 using Modules.Audio;
 using Modules.Data;
-using Modules.Settings;
 
-namespace Settings
+namespace Modules.Settings
 {
     [UsedImplicitly]
     public sealed class SoundsSettingsProcessor : IToggleSettingsProcessor

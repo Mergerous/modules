@@ -1,4 +1,4 @@
-namespace Settings
+namespace Modules.Settings
 {
     public interface IButtonContent
     {

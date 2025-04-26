@@ -1,8 +1,9 @@
 using JetBrains.Annotations;
 using Modules.Views;
 using R3;
+using Settings;
 
-namespace Settings
+namespace Modules.Settings
 {
     [UsedImplicitly]
     public sealed class SettingsTogglePresenter : Presenter

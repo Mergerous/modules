@@ -1,9 +1,10 @@
 using System;
-using Modules.Settings;
+using Modules.States;
+using Settings;
 using VContainer;
 using VContainer.Unity;
 
-namespace Settings.DI
+namespace Modules.Settings
 {
     [Serializable]
     public sealed class SettingsInstaller : IInstaller
@@ -12,7 +13,15 @@ namespace Settings.DI
         {
             // States
             //
-            builder.Register<SettingsState>(Lifetime.Singleton);
+            builder.Register<IState, SettingsState>(Lifetime.Singleton);
+            
+            // Views
+            //
+            builder.Register<SettingsPresenter>(Lifetime.Singleton);
+            builder.Register<SettingsButtonPresenter>(Lifetime.Transient);
+            builder.Register<SettingsTogglePresenter>(Lifetime.Transient);
+            builder.RegisterFactory<SettingsButtonPresenter>(container => container.Resolve<SettingsButtonPresenter>, Lifetime.Singleton);
+            builder.RegisterFactory<SettingsTogglePresenter>(container => container.Resolve<SettingsTogglePresenter>, Lifetime.Singleton);
             
             // Models
             //

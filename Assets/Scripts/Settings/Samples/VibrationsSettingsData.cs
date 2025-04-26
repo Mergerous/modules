@@ -1,6 +1,6 @@
 using System;
 
-namespace Settings
+namespace Modules.Settings
 {
     [Serializable]
     public sealed class VibrationsSettingsData : ISettingsData

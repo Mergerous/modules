@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Settings.Core
+namespace Modules.Settings
 {
     [Serializable]
     public sealed class SettingsData

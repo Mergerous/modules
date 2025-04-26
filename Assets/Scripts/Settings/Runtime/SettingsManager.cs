@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Settings;
 
-namespace Settings
+namespace Modules.Settings
 {
     [UsedImplicitly]
     public sealed class SettingsManager

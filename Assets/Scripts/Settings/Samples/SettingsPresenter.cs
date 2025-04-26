@@ -1,9 +1,9 @@
 using System;
 using JetBrains.Annotations;
-using Modules.Settings;
 using Modules.Views;
+using Settings;
 
-namespace Settings
+namespace Modules.Settings
 {
     [UsedImplicitly]
     public sealed class SettingsPresenter : Presenter
@@ -19,7 +19,7 @@ namespace Settings
             Func<SettingsButtonPresenter> buttonFactory,
             Func<string, ViewHandle> factory)
         {
-            handle = factory("settings_view");
+            handle = factory(SettingsConstants.SETTINGS_VIEW_KEY);
             model = settingsModel;
             this.toggleFactory = toggleFactory;
             this.buttonFactory = buttonFactory;

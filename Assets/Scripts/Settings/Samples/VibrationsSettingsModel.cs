@@ -1,4 +1,6 @@
-namespace Settings
+using Settings;
+
+namespace Modules.Settings
 {
     public sealed class VibrationsSettingsModel : ISettingsItemModel, IToggleContent
     {

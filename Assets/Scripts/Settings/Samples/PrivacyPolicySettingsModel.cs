@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
+using Settings;
 
-namespace Settings
+namespace Modules.Settings
 {
     [UsedImplicitly]
     public sealed class PrivacyPolicySettingsModel : ISettingsItemModel, IButtonContent
