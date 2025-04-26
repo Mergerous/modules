@@ -11,6 +11,8 @@ namespace Modules.Views
 
         public void SetSprite(Sprite sprite) => image.sprite = sprite;
 
+        public void SetColor(Color color) => image.color = color;
+
         public void SetFillAmount(float amount) => image.fillAmount = amount;
         
         public override void Initialize()
