@@ -1,7 +1,6 @@
 using System;
 using JetBrains.Annotations;
 using Modules.Views;
-using Settings;
 
 namespace Modules.Settings
 {
@@ -46,6 +45,12 @@ namespace Modules.Settings
                 }
              
             }
+        }
+
+        public override void Unsubscribe()
+        {
+            base.Unsubscribe();
+            handle.Dispose();
         }
     }
 }
