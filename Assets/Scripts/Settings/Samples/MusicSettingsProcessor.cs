@@ -24,6 +24,7 @@ namespace Settings
             if (model is MusicSettingsItemModel musicSettingsItemModel)
             {
                 audioManager.EnableMusic(isOn);
+                musicSettingsItemModel.Data ??= new MusicSettingsData();
                 musicSettingsItemModel.Data.isEnabled = isOn;
                 dataManager.Save(SettingsConstants.SETTINGS_DATA_SAVE_KEY, settingModel.Data);
             }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
@@ -10,6 +11,12 @@ namespace Modules.Settings
     {
         public SettingsData Data { get; set; }
         public SettingsRemoteInfo RemoteInfo { get; set; }
+
+        public SettingsModel(Func<string, SettingsData> dataFactory, SettingsRemoteInfo remoteInfo)
+        {
+            Data = dataFactory(SettingsConstants.SETTINGS_DATA_SAVE_KEY);
+            RemoteInfo = remoteInfo;
+        }
 
         public IEnumerable<ISettingsItemModel> ItemModels 
             => RemoteInfo.contents.Select(CreateModel);

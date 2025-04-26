@@ -1,6 +1,8 @@
 using System;
+using Modules.Data;
 using Modules.States;
 using Settings;
+using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
@@ -9,6 +11,7 @@ namespace Modules.Settings
     [Serializable]
     public sealed class SettingsInstaller : IInstaller
     {
+        [SerializeField] private SettingsRemoteInfo remoteInfo;
         public void Install(IContainerBuilder builder)
         {
             // States
@@ -25,7 +28,16 @@ namespace Modules.Settings
             
             // Models
             //
-            builder.Register<SettingsModel>(Lifetime.Singleton);
+            builder.Register<SettingsModel>(Lifetime.Singleton)
+                .WithParameter(remoteInfo);
+            
+            // Data
+            //
+            builder.RegisterFactory<SettingsData>(container =>
+            {
+                DataManager dataManager = container.Resolve<DataManager>();
+                return () => dataManager.Load(SettingsConstants.SETTINGS_DATA_SAVE_KEY, new SettingsData());
+            }, Lifetime.Singleton);
             
             builder.Register<IToggleSettingsProcessor, VibrationsSettingsProcessor>(Lifetime.Singleton);
             builder.Register<IToggleSettingsProcessor, MusicSettingsProcessor>(Lifetime.Singleton);

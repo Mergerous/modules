@@ -1,7 +1,6 @@
 using JetBrains.Annotations;
 using Modules.Ads;
 using Modules.States;
-using Settings;
 
 namespace Modules.Settings
 {

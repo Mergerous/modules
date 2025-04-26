@@ -1,11 +1,12 @@
 using System;
 using Modules.Remote;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Settings
 {
-    [Serializable, AddToRemote("remote")]
-    public sealed class SettingsRemoteInfo
+    [CreateAssetMenu]
+    public sealed class SettingsRemoteInfo : SerializedScriptableObject
     {
         [SerializeReference] public ISettingsContent[] contents;
     }

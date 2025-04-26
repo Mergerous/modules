@@ -6,7 +6,7 @@ namespace Modules.Settings
     [UsedImplicitly]
     public sealed class MusicSettingsItemModel : ISettingsItemModel, IToggleContent
     {
-        public MusicSettingsData Data { get; }
+        public MusicSettingsData Data { get; set; }
         public MusicSettingsContent Config { get; }
 
         public bool IsEnabled => Data?.isEnabled ?? Config.isEnabled;

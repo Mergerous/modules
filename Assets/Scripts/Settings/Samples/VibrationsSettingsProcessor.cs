@@ -22,10 +22,11 @@ namespace Modules.Settings
 
         public void Process(bool isOn, ISettingsItemModel model)
         {
-            if (model is MusicSettingsItemModel musicSettingsItemModel)
+            if (model is VibrationsSettingsModel vibrationsSettingsModel)
             {
                 vibrationsManager.Enable(isOn);
-                musicSettingsItemModel.Data.isEnabled = isOn;
+                vibrationsSettingsModel.Data ??= new VibrationsSettingsData();
+                vibrationsSettingsModel.Data.isEnabled = isOn;
                 dataManager.Save(SettingsConstants.SETTINGS_DATA_SAVE_KEY, settingModel.Data);
             }
         }

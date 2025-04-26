@@ -23,6 +23,7 @@ namespace Modules.Settings
             if (model is SoundsSettingsModel soundsSettingsModel)
             {
                 audioManager.EnableMusic(isOn);
+                soundsSettingsModel.Data ??= new SoundsSettingsData();
                 soundsSettingsModel.Data.isEnabled = isOn;
                 dataManager.Save(SettingsConstants.SETTINGS_DATA_SAVE_KEY, settingModel.Data);
             }
