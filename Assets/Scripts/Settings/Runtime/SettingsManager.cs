@@ -10,7 +10,8 @@ namespace Modules.Settings
         private readonly IEnumerable<IToggleSettingsProcessor> toggleProcessors;
         private readonly IEnumerable<IButtonSettingsProcessor> buttonProcessors;
 
-        public SettingsManager(IEnumerable<IToggleSettingsProcessor> toggleProcessors, 
+        public SettingsManager(
+            IEnumerable<IToggleSettingsProcessor> toggleProcessors, 
             IEnumerable<IButtonSettingsProcessor> buttonProcessors)
         {
             this.toggleProcessors = toggleProcessors;

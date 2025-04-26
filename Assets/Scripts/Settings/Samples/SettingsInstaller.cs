@@ -38,7 +38,8 @@ namespace Modules.Settings
                 DataManager dataManager = container.Resolve<DataManager>();
                 return () => dataManager.Load(SettingsConstants.SETTINGS_DATA_SAVE_KEY, new SettingsData());
             }, Lifetime.Singleton);
-            
+
+            builder.Register<SettingsManager>(Lifetime.Singleton);
             builder.Register<IToggleSettingsProcessor, VibrationsSettingsProcessor>(Lifetime.Singleton);
             builder.Register<IToggleSettingsProcessor, MusicSettingsProcessor>(Lifetime.Singleton);
             builder.Register<IToggleSettingsProcessor, SoundsSettingsProcessor>(Lifetime.Singleton);

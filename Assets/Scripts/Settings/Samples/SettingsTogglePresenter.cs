@@ -1,7 +1,6 @@
 using JetBrains.Annotations;
 using Modules.Views;
 using R3;
-using Settings;
 
 namespace Modules.Settings
 {
