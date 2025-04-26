@@ -12,9 +12,9 @@ namespace Modules.Settings
         public SettingsData Data { get; set; }
         public SettingsRemoteInfo RemoteInfo { get; set; }
 
-        public SettingsModel(Func<string, SettingsData> dataFactory, SettingsRemoteInfo remoteInfo)
+        public SettingsModel(Func<SettingsData> dataFactory, SettingsRemoteInfo remoteInfo)
         {
-            Data = dataFactory(SettingsConstants.SETTINGS_DATA_SAVE_KEY);
+            Data = dataFactory();
             RemoteInfo = remoteInfo;
         }
 
