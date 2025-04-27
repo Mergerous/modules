@@ -10,11 +10,14 @@ namespace Audio.Samples
     [Serializable]
     public sealed class AudioInstaller : IInstaller
     {
+        [SerializeField] private AudioContainer container;
         [SerializeField] private AudioSettings audioSettings;
         
         public void Install(IContainerBuilder builder)
         {
-            builder.Register<AudioManager>(Lifetime.Singleton).WithParameter(audioSettings);
+            builder.Register<AudioManager>(Lifetime.Singleton)
+                .WithParameter(container)
+                .WithParameter(audioSettings);
         }
     }
 }
