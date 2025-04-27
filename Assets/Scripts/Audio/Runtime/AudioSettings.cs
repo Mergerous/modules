@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Modules.Audio.Settings
 {
     [CreateAssetMenu(menuName = "Settings/AudioSettings", fileName = "AudiosSettings")]
-    public class AudiosSettings : ScriptableObject
+    public class AudioSettings : ScriptableObject
     {
         [Header("Options")] 
         [field: SerializeField] public bool IsMusicEnabled = true;

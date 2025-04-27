@@ -3,13 +3,14 @@ using System.Linq;
 using JetBrains.Annotations;
 using Modules.Audio.Settings;
 using UnityEngine;
+using AudioSettings = Modules.Audio.Settings.AudioSettings;
 
 namespace Modules.Audio
 {
     [UsedImplicitly]
     public sealed class AudioManager
     {
-        private readonly AudiosSettings settings;
+        private readonly AudioSettings settings;
         private readonly AudioContainer container;
         private bool soundsEnabled;
         private bool musicEnabled;
@@ -21,7 +22,7 @@ namespace Modules.Audio
    
         public bool SoundEnabled => soundsEnabled;
         
-        public AudioManager(AudioContainer container, AudiosSettings settings)
+        public AudioManager(AudioContainer container, AudioSettings settings)
         {
             this.settings = settings;
             this.container = container;
