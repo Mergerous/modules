@@ -6,9 +6,10 @@ namespace Modules.Views
     [UsedImplicitly]
     public sealed class CustomTogglePresenter : Presenter
     {
-        private readonly Subject<bool> valueChangedSubject = new();
+        private readonly ReactiveProperty<bool> value = new();
         private ToggleElement toggleElement;
-        public Observable<bool> ValueChangedObservable => valueChangedSubject;
+        public Observable<bool> ValueChangedObservable => value;
+        public bool Value => value.Value;
         
         public void Subscribe(View view)
         {
@@ -18,7 +19,7 @@ namespace Modules.Views
                 .Subscribe(isOn =>
                 {
                     view.SetState(isOn ? CustomToggleState.On : CustomToggleState.Off);
-                    valueChangedSubject.OnNext(isOn);
+                    value.Value = isOn;
                 })
                 .AddTo(disposables);
         }

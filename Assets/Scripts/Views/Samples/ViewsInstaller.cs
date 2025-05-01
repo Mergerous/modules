@@ -18,6 +18,9 @@ namespace Modules.Views
                 .WithParameter(settings)
                 .WithParameter(container);
 
+            builder.Register<VisibilityPresenter>(Lifetime.Transient);
+            builder.Register<CustomTogglePresenter>(Lifetime.Transient);
+            
             builder.RegisterFactory<string, ViewHandle>(container =>
             {
                 ViewsManager viewsManager = container.Resolve<ViewsManager>();
