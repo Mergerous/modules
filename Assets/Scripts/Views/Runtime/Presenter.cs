@@ -23,7 +23,7 @@ namespace Modules.Views
 
             disposables.Clear();
             
-            cancellationTokenSource.Dispose();
+            cancellationTokenSource.Cancel();
         }
     }
 }
