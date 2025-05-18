@@ -17,11 +17,16 @@ namespace Modules.Views
         
         [SerializeField] private bool isBackward;
         [SerializeField] private bool isSequence;
+        [SerializeField] private bool shouldRewind;
         [SerializeField, ShowIf(nameof(isSequence))] private SequenceMember[] members;
         [SerializeField, HideIf(nameof(isSequence))] private DOTweenAnimation animation;
         
         private void DoPlay()
         {
+            if (shouldRewind)
+            {
+                animation.DORewind();
+            }
             if (isSequence)
             {
                 BuildSequence().PlayForward();
@@ -35,6 +40,10 @@ namespace Modules.Views
         
         private void DoPlayBackwards()
         {
+            if (shouldRewind)
+            {
+                animation.DORewind();
+            }
             if (isSequence)
             {
                 BuildSequence().PlayBackwards();

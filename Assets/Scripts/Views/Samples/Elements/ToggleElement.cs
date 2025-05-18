@@ -8,17 +8,24 @@ namespace Modules.Views
     [UsedImplicitly]
     public sealed class ToggleElement : Element
     {
-        private readonly ReactiveProperty<bool> isOn = new ReactiveProperty<bool>();
+        private readonly Subject<bool> isOnSubject = new();
 
         [SerializeField] private Toggle toggle;
 
-        public Observable<bool> IsOnObservable => isOn;
+        public Observable<bool> IsOnObservable => isOnSubject;
 
-        public bool IsOn => isOn.Value;
+        public bool IsOn => toggle.isOn;
 
-        public void SetValue(bool isOn)
+        public void SetValue(bool isOn, bool shouldNotify = true)
         {
-            toggle.isOn = isOn;
+            if (shouldNotify)
+            {
+                toggle.isOn = isOn;
+            }
+            else
+            {
+                toggle.SetIsOnWithoutNotify(isOn);
+            }
         }
 
         public override void Initialize()
@@ -35,7 +42,7 @@ namespace Modules.Views
 
         private void OnValueChanged(bool isOn)
         {
-            this.isOn.Value = isOn;
+            isOnSubject.OnNext(IsOn);
         }
     }
 }

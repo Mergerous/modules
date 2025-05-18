@@ -14,6 +14,11 @@ namespace Modules.Views
             this.text.SetText(text);
         }
 
+        public void SetArguments(params object[] arguments)
+        {
+            text.text = string.Format(text.text, arguments);
+        }
+
         public void SetColor(Color color)
         {
             text.color = color;
