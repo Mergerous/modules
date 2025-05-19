@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 using VContainer.Unity;
 using Button = UnityEngine.UIElements.Button;
 
-namespace Modules.Time
+namespace Modules.Times
 {
     [UsedImplicitly]
     public sealed class TimeDebug : IDebuggable, ITickable

@@ -3,7 +3,7 @@ using Modules.Data;
 using VContainer;
 using VContainer.Unity;
 
-namespace Modules.Time
+namespace Modules.Times
 {
     [UsedImplicitly]
     public sealed class TimeInstaller : IInstaller

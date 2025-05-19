@@ -4,7 +4,7 @@ using Modules.Data;
 using Times;
 using VContainer.Unity;
 
-namespace Modules.Time
+namespace Modules.Times
 {
     [UsedImplicitly]
     public sealed class TimeManager : ITickable, ITimeProcessor

@@ -1,6 +1,6 @@
 using System;
 
-namespace Modules.Time
+namespace Modules.Times
 {
     [Serializable]
     public class TimeData

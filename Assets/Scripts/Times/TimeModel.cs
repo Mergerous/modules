@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Times;
 
-namespace Modules.Time
+namespace Modules.Times
 {
     [UsedImplicitly]
     public sealed class TimeModel : ITimeContent, ITimerContent

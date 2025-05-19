@@ -1,4 +1,4 @@
-namespace Modules.Time
+namespace Modules.Times
 {
     public static class TimeConstants
     {
