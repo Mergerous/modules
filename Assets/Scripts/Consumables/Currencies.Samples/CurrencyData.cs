@@ -1,6 +1,6 @@
 using System;
 
-namespace Consumables
+namespace Consumables.Currencies
 {
     [Serializable]
     public sealed class CurrencyData

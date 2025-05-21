@@ -2,17 +2,17 @@ using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace Consumables
+namespace Consumables.Currencies
 {
     [UsedImplicitly]
-    public sealed class ConsumablesModel : ICurrenciesContent
+    public sealed class CurrenciesModel : ICurrenciesContent
     {
         private readonly Dictionary<string, CurrencyModel> currencyModels;
-        private readonly ConsumablesConfigSo config;
+        private readonly CurrenciesConfigSo config;
         
-        public ConsumablesData Data { get; }
+        public CurrenciesData Data { get; }
 
-        public ConsumablesModel(Func<ConsumablesData> dataFactory, ConsumablesConfigSo config)
+        public CurrenciesModel(Func<CurrenciesData> dataFactory, CurrenciesConfigSo config)
         {
             this.config = config;
             Data = dataFactory();
@@ -43,9 +43,9 @@ namespace Consumables
                 Data.currencyData.Add(currencyData);
             }
             
-            if (config.ConsumableConfigs.TryGetValue(currencyData.key, out ConsumableConfig record))
+            if (this.config.Configs.TryGetValue(currencyData.key, out CurrencyConfig config))
             {
-                currencyModel = new CurrencyModel(currencyData, record);
+                currencyModel = new CurrencyModel(currencyData, config);
                 currencyModels.TryAdd(currencyData.key, currencyModel);
                 return true;
             }
@@ -54,9 +54,9 @@ namespace Consumables
             return false;
         }
         
-        public T GetCurrency<T>(string key) where T : class, ICurrencyContent
+        public CurrencyModel GetConsumable(string key)
         {
-            return GetOrCreateModel(new CurrencyData(key, default)) as T;
+            return GetOrCreateModel(new CurrencyData(key, default));
         }
     }
 }

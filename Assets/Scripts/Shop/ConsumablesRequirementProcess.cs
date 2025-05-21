@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Consumables;
+using Consumables.Currencies;
 using JetBrains.Annotations;
 
 namespace Shop
@@ -8,11 +8,17 @@ namespace Shop
     [UsedImplicitly]
     public sealed class ConsumablesRequirementProcess : IRequirementProcess
     {
-        private readonly ICurrencyProcessor currencyProcessor;
+        private readonly ICurrenciesProcessor currenciesProcessor;
+
+        public ConsumablesRequirementProcess(ICurrenciesProcessor currenciesProcessor)
+        {
+            this.currenciesProcessor = currenciesProcessor;
+        }
+
         public void Buy(IShopContent model, IEnumerable<ISenderData> senderData, Action<IShopContent> acceptCallback)
         {
             if (model.Requirement is ConsumablesRequirement consumablesRequirement
-                && currencyProcessor.TryRemoveCurrency(consumablesRequirement.currencyData.key, consumablesRequirement.currencyData.value))
+                && currenciesProcessor.TryRemoveCurrency(consumablesRequirement.currencyData.key, consumablesRequirement.currencyData.value))
             {
                 acceptCallback?.Invoke(model);
             }

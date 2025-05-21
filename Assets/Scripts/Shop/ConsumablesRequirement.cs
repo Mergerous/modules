@@ -1,11 +1,12 @@
 using System;
-using Consumables;
+using Consumables.Currencies;
+using UnityEngine.Serialization;
 
 namespace Shop
 {
     [Serializable]
     public sealed class ConsumablesRequirement : IRequirement
     {
-        public CurrencyData currencyData;
+        [FormerlySerializedAs("currenciesData")] public CurrencyData currencyData;
     }
 }

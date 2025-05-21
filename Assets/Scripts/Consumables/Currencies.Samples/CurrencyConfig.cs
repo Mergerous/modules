@@ -1,10 +1,10 @@
 using System;
 using UnityEngine;
 
-namespace Consumables
+namespace Consumables.Currencies
 {
     [Serializable]
-    public sealed class ConsumableConfig
+    public sealed class CurrencyConfig
     {
         public string name;
         public Sprite icon;

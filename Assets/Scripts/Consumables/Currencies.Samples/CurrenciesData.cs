@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 
-namespace Consumables
+namespace Consumables.Currencies
 {
     [Serializable]
-    public sealed class ConsumablesData
+    public sealed class CurrenciesData
     {
         public List<CurrencyData> currencyData = new();
 
-        public ConsumablesData Copy() => new()
+        public CurrenciesData Copy() => new()
         {
             currencyData = new List<CurrencyData>(currencyData),
         };
