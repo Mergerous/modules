@@ -16,7 +16,7 @@ namespace Consumables.Currencies
         {
             // Models
             //
-            builder.Register<ICurrenciesContent, CurrenciesModel>(Lifetime.Singleton).AsSelf().WithParameter(config);
+            builder.Register<ICurrenciesContent<CurrencyModel>, CurrenciesModel>(Lifetime.Singleton).AsSelf().WithParameter(config);
             
             // Core
             //

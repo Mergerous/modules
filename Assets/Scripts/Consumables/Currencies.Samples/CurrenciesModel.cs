@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 namespace Consumables.Currencies
 {
     [UsedImplicitly]
-    public sealed class CurrenciesModel : ICurrenciesContent
+    public sealed class CurrenciesModel : ICurrenciesContent<CurrencyModel>
     {
         private readonly Dictionary<string, CurrencyModel> currencyModels;
         private readonly CurrenciesConfigSo config;
@@ -54,7 +54,7 @@ namespace Consumables.Currencies
             return false;
         }
         
-        public CurrencyModel GetConsumable(string key)
+        public CurrencyModel GetCurrency(string key)
         {
             return GetOrCreateModel(new CurrencyData(key, default));
         }

@@ -17,7 +17,7 @@ namespace Consumables.Currencies
 
         public ICurrencyContent AddCurrency(string key, int value)
         {
-            CurrencyModel content = currenciesModel.GetConsumable(key);
+            CurrencyModel content = currenciesModel.GetCurrency(key);
             content.Value += value;
             Save();
             return content;
@@ -27,7 +27,7 @@ namespace Consumables.Currencies
         {
             if (HasCurrency(key, value))
             {
-                CurrencyModel content = currenciesModel.GetConsumable(key);
+                CurrencyModel content = currenciesModel.GetCurrency(key);
                 content.Value -= value;
                 Save();
                 return true;
@@ -38,7 +38,7 @@ namespace Consumables.Currencies
 
         public bool HasCurrency(string key, int value)
         {
-            CurrencyModel content = currenciesModel.GetConsumable(key);
+            CurrencyModel content = currenciesModel.GetCurrency(key);
 
             return content.Value >= value;
         }
