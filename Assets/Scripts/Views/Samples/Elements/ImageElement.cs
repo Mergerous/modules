@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 
 namespace Modules.Views
