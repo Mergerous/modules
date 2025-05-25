@@ -1,6 +1,11 @@
+using System;
 using UnityEngine;
 
-public class ScrollElement : MonoBehaviour
+namespace Modules.Views
 {
-    
+    [Serializable]
+    public sealed class ScrollElement : Element
+    {
+        [field: SerializeField] public Scroll Scroll { get; private set; }
+    }
 }
