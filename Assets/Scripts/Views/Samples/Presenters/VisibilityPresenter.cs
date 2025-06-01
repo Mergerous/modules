@@ -18,8 +18,8 @@ namespace Modules.Views
         public void Subscribe(View backgroundView, View view)
         {
             base.Subscribe();
-            backgroundTransform ??= backgroundView.GetElement<TransformElement>("transform").Transform as RectTransform;
-            rectTransform ??= view.GetElement<TransformElement>("transform").Transform as RectTransform;
+            backgroundTransform ??= backgroundView.GetElement<TransformElement>("transform").RectTransform;
+            rectTransform ??= view.GetElement<TransformElement>("transform").RectTransform;
         }
 
         private async IAsyncEnumerable<bool> Tick(CancellationToken cancellationToken)
