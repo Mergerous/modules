@@ -1,4 +1,4 @@
-using Google.Apis.Sheets.v4;
+using Google.Apis.Services;
 using Modules.Remote;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -15,7 +15,7 @@ namespace Remote
         [Button]
         public void Parse()
         {
-            SheetsService service = credentialsProvider.GetSheetsService();
+            BaseClientService.Initializer service = credentialsProvider.GetClientService();
 
             foreach (IRequestProvider requestProvider in requestProviders)
             {

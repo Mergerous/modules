@@ -1,9 +1,9 @@
-using Google.Apis.Sheets.v4;
+using Google.Apis.Services;
 
 namespace Modules.Remote
 {
     public interface ICredentialsProvider
     {
-        SheetsService GetSheetsService();
+        BaseClientService.Initializer GetClientService();
     }
 }

@@ -1,9 +1,9 @@
-using Google.Apis.Sheets.v4;
+using Google.Apis.Services;
 
 namespace Modules.Remote
 {
     public interface IRequestProvider
     {
-        void Request(SheetsService service);
+        void Request(BaseClientService.Initializer initializer);
     }
 }

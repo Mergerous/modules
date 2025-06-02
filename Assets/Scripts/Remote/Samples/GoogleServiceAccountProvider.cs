@@ -7,29 +7,27 @@ using UnityEngine;
 namespace Modules.Remote
 {
     [Serializable]
-    public sealed class ServiceAccountProvider : ICredentialsProvider
+    public sealed class GoogleServiceAccountProvider : ICredentialsProvider
     {
         [SerializeField]
-        private string _applicationName;
-    
-        [TextArea]
+        private string applicationName;
+        
         [SerializeField]
-        private string _credentialsJson;
-
-        public SheetsService GetSheetsService()
+        private TextAsset credentialsJson;
+        
+        public BaseClientService.Initializer GetClientService()
         {
             var httpClientInitializer = GoogleCredential
-                .FromJson(_credentialsJson)
-                .CreateScoped(SheetsService.Scope.Spreadsheets);
+                .FromJson(credentialsJson.text)
+                .CreateScoped(SheetsService.Scope.Drive, SheetsService.Scope.Spreadsheets);
         
             var initializer = new BaseClientService.Initializer
             {
-                ApplicationName = _applicationName,
+                ApplicationName = applicationName,
                 HttpClientInitializer = httpClientInitializer
             };
-            var sheetsService = new SheetsService(initializer);
-
-            return sheetsService;
+            
+            return initializer;
         }
     }
 }
