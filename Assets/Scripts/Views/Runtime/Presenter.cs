@@ -7,11 +7,11 @@ namespace Modules.Views
     public abstract class Presenter
     {
         protected readonly ICollection<IDisposable> disposables = new List<IDisposable>();
-        protected readonly CancellationTokenSource cancellationTokenSource = new();
+        protected CancellationTokenSource cancellationTokenSource;
 
         public virtual void Subscribe()
         {
-            
+            cancellationTokenSource = new CancellationTokenSource();
         }
 
         public virtual void Unsubscribe()
