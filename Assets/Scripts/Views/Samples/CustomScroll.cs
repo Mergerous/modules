@@ -23,7 +23,7 @@ namespace Modules.Views
         private Tween tween;
         private bool endDragTrigger;
 
-        public Subject<int> SelectedSubject = new();
+        public ReactiveProperty<int> SelectedSubject = new();
 
         private void Awake()
         {
@@ -47,15 +47,29 @@ namespace Modules.Views
         [Button]
         public void SpinTo(int i)
         {
+            tween?.Kill();
+            
             float halfWidth = rect.viewport.rect.width / 2f;
             float offset = halfWidth / animators.Count;
             Vector2 anchoredPosition = rect.content.anchoredPosition;
+
+            
+            if(SelectedSubject.Value == 0 && i == animators.Count - 1)
+            {
+                anchoredPosition.x += halfWidth;
+            } 
+            else if (SelectedSubject.Value == animators.Count - 1 && i == 0)
+            {
+                anchoredPosition.x -= halfWidth;
+            }
+            
             anchoredPosition.x = halfWidth * (int)(anchoredPosition.x / halfWidth) - offset * i;
-         
-            tween?.Kill();
+            
+            SelectedSubject.OnNext(i);
+
             tween = DOVirtual
                 .Vector2(rect.content.anchoredPosition, anchoredPosition, magnetDuration, t => rect.content.anchoredPosition = t)
-                .OnComplete(() => SelectedSubject.OnNext(i))
+                .OnKill(() => rect.content.anchoredPosition = anchoredPosition )
                 .SetEase(magnetEase);
         }
 
