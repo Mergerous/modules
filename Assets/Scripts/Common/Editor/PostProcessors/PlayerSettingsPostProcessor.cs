@@ -1,7 +1,6 @@
-using Modules.Common.Settings;
 using UnityEditor;
 
-namespace Modules.Common.Editor.PostProcessors
+namespace Modules.Common
 {
     public static class PlayerSettingsPostProcessor
     {

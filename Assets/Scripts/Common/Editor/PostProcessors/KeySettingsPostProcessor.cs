@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using Modules.Common.Settings;
 using UnityEditor;
 
-namespace Modules.Common.Editor.PostProcessors
+namespace Modules.Common
 {
     public class KeySettingsPostProcessor : AssetPostprocessor
     {

@@ -1,7 +1,7 @@
 using System.Text.RegularExpressions;
 using UnityEditor;
 
-namespace Modules.Common.Editor.PostProcessors
+namespace Modules.Common
 {
     public class JarPostProcessor : AssetPostprocessor
     {

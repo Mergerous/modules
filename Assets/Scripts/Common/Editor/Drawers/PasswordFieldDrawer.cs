@@ -1,9 +1,9 @@
-using Modules.Common.Attributes;
+using Modules.Common;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 
-namespace Modules.Common.Editor.Drawers
+namespace Modules.Common
 {
     [CustomPropertyDrawer(typeof(PasswordFieldAttribute))]
     public class PasswordFieldDrawer : PropertyDrawer

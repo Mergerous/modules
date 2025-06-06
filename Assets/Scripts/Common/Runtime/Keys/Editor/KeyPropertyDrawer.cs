@@ -1,6 +1,4 @@
-using Modules.Common.Editor.Drawers;
 using Modules.Common.Extensions;
-using Modules.Common.Settings;
 using Modules.Common.Structures;
 using Sirenix.OdinInspector.Editor;
 using UnityEditor;
@@ -11,7 +9,7 @@ using UnityEngine.UIElements;
 #endif
 
 
-namespace Modules.Common.Keys.Editor
+namespace Modules.Common
 { 
     // BUG TEMPORARY
 #if ODIN_INSPECTOR

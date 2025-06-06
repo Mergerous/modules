@@ -1,14 +1,11 @@
 using System;
 using System.Collections.Generic;
-using Modules.Common.Editor.PostProcessors;
-using Modules.Common.Settings;
 using Modules.Common.Structures;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace Modules.Common.Editor.Drawers
+namespace Modules.Common
 {
     public class KeySearchProvider : ScriptableObject, ISearchWindowProvider
     {
