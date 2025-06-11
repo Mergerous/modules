@@ -29,19 +29,11 @@ namespace Modules.Views
             return this[from].GetElement<T>(key);
         }
 
-        private void OnEnable()
+        private void Awake()
         {
             foreach (var element in elements)
             {
                 element.Initialize();
-            }
-        }
-        
-        private void OnDisable()
-        {
-            foreach (var element in elements)
-            {
-                element.Dispose();
             }
         }
 
@@ -68,6 +60,14 @@ namespace Modules.Views
                         stateBehaviour.Apply();
                     }
                 }
+            }
+        }
+
+        private void OnDestroy()
+        {
+            foreach (var element in elements)
+            {
+                element.Dispose();
             }
         }
     }
