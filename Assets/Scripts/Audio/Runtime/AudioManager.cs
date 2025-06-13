@@ -78,7 +78,7 @@ namespace Modules.Audio
             source.mute = !soundsEnabled;
         }
 
-        public void PlayMelody(string melodyKey, AudioSource source)
+        public void PlayMelody(string melodyKey, AudioSource source = null)
         {
             if (!musicEnabled)
             {
