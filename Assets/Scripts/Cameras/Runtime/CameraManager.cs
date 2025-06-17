@@ -16,9 +16,9 @@ namespace Modules.Cameras
             this.camerasContainer = camerasContainer;
         }
 
-        public void SetState(string key, int state)
+        public void SetState(int id, int value)
         {
-            camerasContainer.StateDrivenAnimator.SetInteger(Animator.StringToHash(key), state);
+            camerasContainer.StateDrivenAnimator.SetInteger(id, value);
         }
 
         public void SetTrigger(string trigger)
