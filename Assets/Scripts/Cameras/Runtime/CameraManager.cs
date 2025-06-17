@@ -7,34 +7,38 @@ namespace Modules.Cameras
     [UsedImplicitly]
     public sealed class CameraManager
     {
-        private readonly CamerasContainer _camerasContainer;
+        private readonly CamerasContainer camerasContainer;
         
         public Camera MainCamera => Camera.main;
 
         public CameraManager(CamerasContainer camerasContainer)
         {
-            _camerasContainer = camerasContainer;
+            this.camerasContainer = camerasContainer;
         }
 
-        public CameraManager SetTrigger(string trigger)
+        public void SetState(string key, int state)
         {
-            _camerasContainer.StateDrivenAnimator.SetTrigger(Animator.StringToHash(trigger));
-            return this;
+            camerasContainer.StateDrivenAnimator.SetInteger(Animator.StringToHash(key), state);
+        }
+
+        public void SetTrigger(string trigger)
+        {
+            camerasContainer.StateDrivenAnimator.SetTrigger(Animator.StringToHash(trigger));
         }
 
         public CinemachineVirtualCameraBase GetChildCamera(int index)
         { 
-            return _camerasContainer.CinemachineStateDrivenCamera.ChildCameras[index];
+            return camerasContainer.CinemachineStateDrivenCamera.ChildCameras[index];
         }
 
         public void AddTargetGroupMember(Transform transform, float weight, float radius)
         {
-            _camerasContainer.CinemachineTargetGroup.AddMember(transform, weight, radius);
+            camerasContainer.CinemachineTargetGroup.AddMember(transform, weight, radius);
         }
 
         public void RemoveTargetGroupMember(Transform transform)
         {
-            _camerasContainer.CinemachineTargetGroup.RemoveMember(transform);
+            camerasContainer.CinemachineTargetGroup.RemoveMember(transform);
         }
     }
 
