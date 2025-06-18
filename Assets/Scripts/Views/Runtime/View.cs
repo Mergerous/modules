@@ -57,6 +57,7 @@ namespace Modules.Views
                 {
                     foreach (StateComponent stateBehaviour in state.Components)
                     {
+                        stateBehaviour.View = this;
                         stateBehaviour.Apply();
                     }
                 }
