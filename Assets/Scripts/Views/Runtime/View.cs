@@ -23,7 +23,7 @@ namespace Modules.Views
             {
                 return elements
                     .OfType<T>()
-                    .First(element => element.Key == key);
+                    .FirstOrDefault(element => element.Key == key);
             }
              
             return this[from].GetElement<T>(key);
