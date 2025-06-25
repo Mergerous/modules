@@ -21,7 +21,7 @@ namespace Modules.Tutorial
             // Core
             //
             builder.RegisterEntryPoint<TutorialManager>();
-            builder.Register<ITutorialSupporter, AnchorTutorialSupporter>(Lifetime.Singleton);
+            builder.Register<ITutorialSupporter, PointerTutorialSupporter>(Lifetime.Singleton);
             builder.Register<ITutorialHandler, CommandTutorialHandler>(Lifetime.Singleton);
             builder.Register<CommandTutorialBlackboard>(Lifetime.Singleton);
         }

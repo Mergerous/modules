@@ -5,14 +5,14 @@ using Modules.Views;
 namespace Modules.Tutorial
 {
     [UsedImplicitly]
-    public sealed class AnchorTutorialSupporter : ITutorialSupporter
+    public sealed class PointerTutorialSupporter : ITutorialSupporter
     {
         private readonly AnchorManager anchorManager;
         private readonly Func<string, ViewHandle> viewFactory;
 
         private ViewHandle handle;
 
-        public AnchorTutorialSupporter(AnchorManager anchorManager, Func<string, ViewHandle> viewFactory)
+        public PointerTutorialSupporter(AnchorManager anchorManager, Func<string, ViewHandle> viewFactory)
         {
             this.anchorManager = anchorManager;
             this.viewFactory = viewFactory;
@@ -20,7 +20,7 @@ namespace Modules.Tutorial
 
         public void Support(ITutorialSupport support)
         {
-            if (support is AnchorTutorialSupport anchorTutorialSupport)
+            if (support is PointerTutorialSupport anchorTutorialSupport)
             {
                 handle = viewFactory(anchorTutorialSupport.viewKey);
                 anchorManager.GetAnchor(anchorTutorialSupport.anchorKey, 
