@@ -23,6 +23,8 @@ namespace Modules.Views
             builder.Register<ImagePresenter>(Lifetime.Transient);
             builder.RegisterFactory<ImagePresenter>(container => container.Resolve<ImagePresenter>, Lifetime.Singleton);
             
+            builder.Register<IPresenterFactory, PresenterFactory>(Lifetime.Transient);
+            
             builder.RegisterFactory<string, ViewHandle>(container =>
             {
                 ViewsManager viewsManager = container.Resolve<ViewsManager>();

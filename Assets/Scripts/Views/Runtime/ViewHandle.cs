@@ -2,7 +2,7 @@ using System;
 
 namespace Modules.Views
 {
-    public sealed class ViewHandle : IDisposable
+    public sealed class ViewHandle : IViewHandle
     {
         private event Func<string, View> onCreate;
         private event Action<View> onDestroy;
