@@ -9,6 +9,8 @@ namespace Modules.Views
     public class ImageElement : Element
     {
         [SerializeField] private Image image;
+        
+        public Image Image => image;
 
         public void SetSprite(Sprite sprite) => image.sprite = sprite;
 
