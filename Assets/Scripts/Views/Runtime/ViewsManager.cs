@@ -5,7 +5,7 @@ using Object = UnityEngine.Object;
 namespace Modules.Views
 {
     [UsedImplicitly]
-    public sealed class ViewsManager : IHandleFactory
+    public sealed class ViewsManager : IHandleFactory, IViewFactory
     {
         private readonly ViewsContainer viewsContainer;
         private readonly ViewsSettings viewsSettings;
