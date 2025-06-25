@@ -1,5 +1,4 @@
 using System;
-using Modules.Views;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -15,6 +14,7 @@ namespace Modules.Views
         public void Install(IContainerBuilder builder)
         {
             builder.Register<ViewsManager>(Lifetime.Singleton)
+                .AsImplementedInterfaces()
                 .WithParameter(settings)
                 .WithParameter(container);
 
@@ -25,10 +25,10 @@ namespace Modules.Views
             
             builder.Register<IPresenterFactory, PresenterFactory>(Lifetime.Transient);
             
-            builder.RegisterFactory<string, ViewHandle>(container =>
+            builder.RegisterFactory<string, ViewHandle>(resolver =>
             {
-                ViewsManager viewsManager = container.Resolve<ViewsManager>();
-                return key => new ViewHandle(key, viewsManager.CreateView, viewsManager.DestroyView);
+                IViewFactory viewFactory = resolver.Resolve<IViewFactory>();
+                return key => new ViewHandle(key, viewFactory.CreateView, viewFactory.DestroyView);
             }, Lifetime.Singleton);
         }
     }

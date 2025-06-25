@@ -5,7 +5,7 @@ using Object = UnityEngine.Object;
 namespace Modules.Views
 {
     [UsedImplicitly]
-    public sealed class ViewsManager
+    public sealed class ViewsManager : IHandleFactory
     {
         private readonly ViewsContainer viewsContainer;
         private readonly ViewsSettings viewsSettings;
@@ -14,6 +14,11 @@ namespace Modules.Views
         {
             this.viewsSettings = viewsSettings;
             this.viewsContainer = viewsContainer;
+        }
+        
+        IViewHandle IHandleFactory.CreateHandle(string key)
+        {
+            return new ViewHandle(key, CreateView, DestroyView);
         }
 
         public View CreateView(string key)
