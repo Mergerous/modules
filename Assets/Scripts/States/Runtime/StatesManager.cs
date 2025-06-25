@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using JetBrains.Annotations;
 
 namespace Modules.States
@@ -11,17 +10,10 @@ namespace Modules.States
         private Dictionary<int, StateMachine> machines = new();
         private Dictionary<string, IState> states = new();
         private IEnumerable<IState> statesList;
-
+        
         public void Initialize(IEnumerable<IState> states)
         {
             statesList = states;
-            foreach (IState state in states)
-            {
-                if (state.TryGetKey(out string key))
-                {
-                    this.states.Add(key, state);
-                }
-            }
         }
 
         public StateMachine GetMachine(int index)
@@ -135,32 +127,6 @@ namespace Modules.States
                         foreach (IState linkedState in linked)
                         {
                             if (linkedState.GetType() == typeof(T))
-                            {
-                                linkedState.Close();
-                                linked.Remove(linkedState);
-                                state.OnLinkedStateClosed();
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        public void Close(string key, StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0)
-        {
-            if (options.HasFlag(StateOptions.LinkWithLastOnStack))
-            {
-                StateMachine machine = GetMachine(layer);
-                if (machine.stack.Count > 0)
-                {
-                    IState state = machine.stack.Peek();
-                    if (machine.linkedStates.TryGetValue(state, out HashSet<IState> linked))
-                    {
-                        foreach (IState linkedState in linked)
-                        {
-                            StateAttribute attribute = linkedState.GetType().GetCustomAttribute<StateAttribute>();
-                            if (attribute != null && attribute.Key == key)
                             {
                                 linkedState.Close();
                                 linked.Remove(linkedState);
