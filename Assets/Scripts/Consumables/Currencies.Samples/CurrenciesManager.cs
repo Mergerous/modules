@@ -1,3 +1,4 @@
+using System;
 using JetBrains.Annotations;
 using Modules.Data;
 
@@ -15,28 +16,27 @@ namespace Consumables.Currencies
             this.dataManager = dataManager;
         }
 
-        public ICurrencyContent AddCurrency(string key, int value)
+        public void AddCurrency(string key, int value)
         {
             CurrencyModel content = currenciesModel.GetCurrency(key);
             content.Value += value;
             Save();
-            return content;
         }
 
-        public bool TryRemoveCurrency(string key, int value)
+        public void TryRemoveCurrency(string key, int value, Action<bool> callback = null)
         {
             if (HasCurrency(key, value))
             {
                 CurrencyModel content = currenciesModel.GetCurrency(key);
                 content.Value -= value;
                 Save();
-                return true;
+                callback?.Invoke(true);
             }
 
-            return false;
+            callback?.Invoke(false);
         }
 
-        public bool HasCurrency(string key, int value)
+        private bool HasCurrency(string key, int value)
         {
             CurrencyModel content = currenciesModel.GetCurrency(key);
 
