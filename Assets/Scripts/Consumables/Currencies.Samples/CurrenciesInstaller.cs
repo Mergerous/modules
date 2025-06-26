@@ -21,6 +21,11 @@ namespace Consumables.Currencies
                 .WithParameter(resolver => resolver.Resolve<DataManager>().Load(CurrenciesConstants.CURRENCIES_DATA_SAVE_KEY, new CurrenciesData()))
                 .AsSelf();
             
+            // Views
+            //
+            builder.Register<CurrencyListPresenter>(Lifetime.Transient);
+            builder.Register<CurrencyItemPresenter>(Lifetime.Transient);
+
             // Core
             //
             builder.Register<ICurrenciesProcessor, CurrenciesManager>(Lifetime.Singleton).AsSelf();

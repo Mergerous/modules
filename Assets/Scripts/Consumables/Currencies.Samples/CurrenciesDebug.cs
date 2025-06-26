@@ -1,17 +1,19 @@
+using System.Collections.Generic;
+using Consumables.Currencies;
 using JetBrains.Annotations;
 using Modules.Debugging;
 using UnityEngine.UIElements;
 
-namespace Consumables.Currencies
+namespace Consumables
 {
     [UsedImplicitly]
     public sealed class CurrenciesDebug : IDebuggable
     {
-        private readonly ICurrenciesProcessor currenciesesProcessor;
+        private readonly ICurrenciesProcessor currenciesProcessor;
 
-        public CurrenciesDebug(CurrenciesManager currenciesesManager)
+        public CurrenciesDebug(ICurrenciesProcessor currenciesProcessor)
         {
-            currenciesesProcessor = currenciesesManager;
+            this.currenciesProcessor = currenciesProcessor;
         }
 
         public VisualElement CreateDebugElement()
@@ -26,18 +28,18 @@ namespace Consumables.Currencies
                 }
             };
 
-            // DropdownField dropdown = new DropdownField
-            // {
-            //     choices = new List<string>()
-            //     {
-            //         ConsumableNames.Dollar
-            //     },
-            //     style =
-            //     {
-            //         flexGrow = 1f
-            //     },
-            //     index = 0
-            // };
+            DropdownField dropdown = new DropdownField
+            {
+                choices = new List<string>()
+                {
+                    ConsumablesNames.DOLLAR
+                },
+                style =
+                {
+                    flexGrow = 1f
+                },
+                index = 0
+            };
 
             IntegerField countField = new IntegerField
             {
@@ -55,10 +57,10 @@ namespace Consumables.Currencies
                 },
                 text = "Add Currency"
             };
-            //
-            // getButton.clicked += () => currencyProcessor.AddCurrency<CurrencyModel>(dropdown.value, countField.value);
-            //
-            // layout.Add(dropdown);
+            
+            getButton.clicked += () => currenciesProcessor.AddCurrency(dropdown.value, countField.value);
+            
+            layout.Add(dropdown);
             layout.Add(countField);
             layout.Add(getButton);
 
