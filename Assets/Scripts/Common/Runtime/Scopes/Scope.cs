@@ -20,10 +20,20 @@ namespace Modules.Scopes
 
         public void Invoke<TT>(TT value, Action<TT, T> callback)
         {
-            if (elements.TryGetValue(typeof(TT), out T element))
+            if (elements.TryGetValue(value.GetType(), out T element))
             {
                 callback(value, element);
             }
+        }
+
+        public TResult Require<TValue, TResult>(TValue value, Func<TValue, T, TResult> predicate)
+        {
+            if (elements.TryGetValue(value.GetType(), out T element))
+            {
+                return predicate(value, element);
+            }
+
+            throw new ArgumentOutOfRangeException();
         }
     }
 }
