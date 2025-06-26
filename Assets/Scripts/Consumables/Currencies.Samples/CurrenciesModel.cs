@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
@@ -9,13 +8,12 @@ namespace Consumables.Currencies
     {
         private readonly Dictionary<string, CurrencyModel> currencyModels;
         private readonly CurrenciesConfigSo config;
-        
-        public CurrenciesData Data { get; }
+        public readonly CurrenciesData data;
 
-        public CurrenciesModel(Func<CurrenciesData> dataFactory, CurrenciesConfigSo config)
+        public CurrenciesModel(CurrenciesData data, CurrenciesConfigSo config)
         {
             this.config = config;
-            Data = dataFactory();
+            this.data = data;
             currencyModels = new Dictionary<string, CurrencyModel>();
         }
 
@@ -32,15 +30,15 @@ namespace Consumables.Currencies
         
         private bool TryCreateModel(CurrencyData currencyData, out CurrencyModel currencyModel)
         {
-            int index = Data.currencyData.FindIndex(currency => currency.key == currencyData.key);
+            int index = data.currencyData.FindIndex(currency => currency.key == currencyData.key);
 
             if (index >= 0)
             {
-                currencyData = Data.currencyData[index];
+                currencyData = data.currencyData[index];
             }
             else
             {
-                Data.currencyData.Add(currencyData);
+                data.currencyData.Add(currencyData);
             }
             
             if (this.config.Configs.TryGetValue(currencyData.key, out CurrencyConfig config))

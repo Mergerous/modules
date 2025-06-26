@@ -16,7 +16,10 @@ namespace Consumables.Currencies
         {
             // Models
             //
-            builder.Register<ICurrenciesContent<CurrencyModel>, CurrenciesModel>(Lifetime.Singleton).AsSelf().WithParameter(config);
+            builder.Register<ICurrenciesContent<CurrencyModel>, CurrenciesModel>(Lifetime.Singleton)
+                .WithParameter(config)
+                .WithParameter(resolver => resolver.Resolve<DataManager>().Load(CurrenciesConstants.CURRENCIES_DATA_SAVE_KEY, new CurrenciesData()))
+                .AsSelf();
             
             // Core
             //
@@ -25,12 +28,6 @@ namespace Consumables.Currencies
             // Debugging
             //
             builder.Register<IDebuggable, CurrenciesDebug>(Lifetime.Singleton);
-            
-            // Data
-            //
-            builder.RegisterFactory<CurrenciesData>(container => () => container
-                .Resolve<DataManager>()
-                .Load(CurrenciesConstants.CURRENCIES_DATA_SAVE_KEY, new CurrenciesData()), Lifetime.Singleton);
         }
     }
 }

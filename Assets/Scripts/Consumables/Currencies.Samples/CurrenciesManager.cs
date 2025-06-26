@@ -45,7 +45,7 @@ namespace Consumables.Currencies
 
         private void Save()
         {
-            dataManager.Save(CurrenciesConstants.CURRENCIES_DATA_SAVE_KEY, currenciesModel.Data);
+            dataManager.Save(CurrenciesConstants.CURRENCIES_DATA_SAVE_KEY, currenciesModel.data);
         }
     }
 }
