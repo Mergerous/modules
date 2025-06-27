@@ -6,22 +6,22 @@ namespace Consumables.Currencies
 {
     public interface ICurrenciesProcessor
     {
-        public void AddCurrency(string key, int value)
+        void AddCurrency(string key, int value)
         {
             throw new NotImplementedException();
         }
 
-        public Task AddCurrencyAsync(string key, int value, CancellationToken token)
+        Task AddCurrencyAsync(string key, int value, CancellationToken token)
         {
             throw new NotImplementedException();
         }
 
-        public bool TryRemoveCurrency(string key, int value)
+        bool TryRemoveCurrency(string key, int value)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> TryRemoveCurrencyAsync(string key, int value, CancellationToken token)
+        Task<bool> TryRemoveCurrencyAsync(string key, int value, CancellationToken token)
         {
             throw new NotImplementedException();
         }
