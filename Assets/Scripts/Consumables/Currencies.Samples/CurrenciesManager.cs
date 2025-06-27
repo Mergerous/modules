@@ -1,4 +1,3 @@
-using System;
 using JetBrains.Annotations;
 using Modules.Data;
 
@@ -23,17 +22,18 @@ namespace Consumables.Currencies
             Save();
         }
 
-        public void TryRemoveCurrency(string key, int value, Action<bool> callback = null)
+        public bool TryRemoveCurrency(string key, int value)
         {
             if (HasCurrency(key, value))
             {
                 CurrencyModel content = currenciesModel.GetCurrency(key);
                 content.Value -= value;
                 Save();
-                callback?.Invoke(true);
+                
+                return true;
             }
 
-            callback?.Invoke(false);
+            return false;
         }
 
         private bool HasCurrency(string key, int value)
