@@ -14,10 +14,9 @@ namespace Modules.CommonModule.Extensions
             return source.OrderBy(_ => random.Next());
         }
 
-        public static T GetRandom<T>(this IList<T> source)
+        public static T GetRandom<T>(this IEnumerable<T> source)
         {
-            Random random = new Random();
-            return source[random.Next(0, source.Count)];
+            return source.Shuffle().First();
         }
 
         public static bool TryFindOfType<T>(this IEnumerable source, out T destination)
