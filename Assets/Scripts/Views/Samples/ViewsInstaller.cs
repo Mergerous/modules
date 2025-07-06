@@ -20,6 +20,9 @@ namespace Modules.Views
 
             builder.Register<VisibilityPresenter>(Lifetime.Transient);
             builder.Register<CustomTogglePresenter>(Lifetime.Transient);
+            builder.RegisterFactory<CustomTogglePresenter>(container => container.Resolve<CustomTogglePresenter>, Lifetime.Singleton);
+            builder.Register<ButtonPresenter>(Lifetime.Transient);
+            builder.RegisterFactory<ButtonPresenter>(container => container.Resolve<ButtonPresenter>, Lifetime.Singleton);
             builder.Register<ImagePresenter>(Lifetime.Transient);
             builder.RegisterFactory<ImagePresenter>(container => container.Resolve<ImagePresenter>, Lifetime.Singleton);
             

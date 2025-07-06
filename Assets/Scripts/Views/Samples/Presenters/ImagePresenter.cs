@@ -1,26 +1,35 @@
 using JetBrains.Annotations;
-using R3;
-using UnityEngine;
-// using UnityEngine.AddressableAssets;
+using Modules.Remote;
 
 namespace Modules.Views
 {
+    public enum ImageViewState
+    {
+        Loading = 0,
+        Active  = 1
+    }
+    
     [UsedImplicitly]
     public sealed class ImagePresenter : Presenter
     {
-        // public void SetSpriteAsync(View view, AssetReferenceSprite reference)
-        // {
-        //     if (reference.IsDone)
-        //     {
-        //         view.GetElement<ImageElement>("image").SetSprite(reference.Asset as Sprite);
-        //     }
-        //     else
-        //     {
-        //         reference.LoadAssetAsync().Task
-        //             .ToObservable()
-        //             .Subscribe(sprite => view.GetElement<ImageElement>("image").SetSprite(sprite))
-        //             .AddTo(disposables);
-        //     }
-        // }
+        public ImageElement ImageElement { get; private set; }
+        
+        public async void Subscribe(View view, ISpriteContent spriteContent)
+        {
+            base.Subscribe();
+
+            try
+            {
+                ImageElement = view.GetElement<ImageElement>("image");
+                view.SetState(ImageViewState.Loading);
+                spriteContent.Sprite ??= await RemoteHelper.GetSprite(spriteContent.Url, cancellationTokenSource.Token);
+                view.SetState(ImageViewState.Active);
+                ImageElement.SetSprite(spriteContent.Sprite);
+            }
+            catch
+            {
+                // ignored
+            }
+        }
     }
 }

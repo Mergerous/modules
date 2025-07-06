@@ -28,6 +28,11 @@ namespace Modules.Views
             }
         }
 
+        public void SetToggleGroup(ToggleGroup toggleGroup)
+        {
+            toggle.group = toggleGroup;
+        }
+
         public override void Initialize()
         {
             base.Initialize();
