@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 namespace Modules.Scopes
 {
     [UsedImplicitly]
-    public sealed class Scope<T>
+    public class Scope<T>
     {
         private readonly Dictionary<Type, T> elements;
 
