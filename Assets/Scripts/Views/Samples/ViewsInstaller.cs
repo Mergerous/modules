@@ -18,6 +18,8 @@ namespace Modules.Views
                 .WithParameter(settings)
                 .WithParameter(container);
 
+            builder.Register<PagesPresenter>(Lifetime.Transient);
+            builder.Register<TabPresenter>(Lifetime.Transient);
             builder.Register<VisibilityPresenter>(Lifetime.Transient);
             builder.Register<CustomTogglePresenter>(Lifetime.Transient);
             builder.RegisterFactory<CustomTogglePresenter>(container => container.Resolve<CustomTogglePresenter>, Lifetime.Singleton);

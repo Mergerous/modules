@@ -9,15 +9,16 @@ namespace Modules.Views
     }
     
     [UsedImplicitly]
-    public abstract class PageViewPresenter
+    public abstract class PagePresenter : Presenter
     {
         private View view;
-
-        public void Initialize(View view)
+        
+        public void Subscribe(View view)
         {
+            base.Subscribe();
             this.view = view;
         }
-        
+
         public void Select(bool isSelected)
         {
             view.SetState(isSelected ? PageState.On : PageState.Off);
