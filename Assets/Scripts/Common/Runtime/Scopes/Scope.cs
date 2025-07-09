@@ -18,22 +18,24 @@ namespace Modules.Scopes
                 element => element);
         }
 
-        public void Invoke<TT>(TT value, Action<TT, T> callback)
+        public T Get(Type value)
         {
-            if (elements.TryGetValue(value.GetType(), out T element))
+            if (elements.TryGetValue(value, out T element))
             {
-                callback(value, element);
+                return element;
             }
+
+            return default;
         }
-
-        public TResult Require<TValue, TResult>(TValue value, Func<TValue, T, TResult> predicate)
+        
+        public T Get<TT>()
         {
-            if (elements.TryGetValue(value.GetType(), out T element))
+            if (elements.TryGetValue(typeof(TT), out T element))
             {
-                return predicate(value, element);
+                return element;
             }
 
-            throw new ArgumentOutOfRangeException();
+            return default;
         }
     }
 }

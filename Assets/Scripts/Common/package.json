@@ -1,6 +1,6 @@
 {
   "name": "com.mergerous.modules-common",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "displayName": "Modules.Common",
   "description": "This is an example package",
   "unity": "6000.0",
