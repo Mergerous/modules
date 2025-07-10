@@ -3,12 +3,17 @@ using R3;
 
 namespace Modules.Views
 {
+    public enum TabState
+    {
+        On,
+        Off
+    }
+    
     [UsedImplicitly]
     public sealed class TabPresenter : Presenter
     {
         private readonly Subject<bool> onClicked = new();
         private CustomTogglePresenter togglePresenter;
-        private TextElement textElement;
 
         public Observable<bool> OnClicked => onClicked;
 
@@ -17,17 +22,15 @@ namespace Modules.Views
             this.togglePresenter = togglePresenter;
         }
 
-        public void Subscribe(string text, View view)
+        public void Subscribe(View view)
         {
             base.Subscribe();
             
-            textElement.SetText(text);
             togglePresenter.Subscribe(view);
             togglePresenter.ValueChangedObservable
+                .Do(isOn => view.SetState(isOn ? TabState.On : TabState.Off))
                 .Subscribe(onClicked.OnNext)
                 .AddTo(disposables);
-            
-            textElement = view.GetElement<TextElement>("text");
         }
     }
 }

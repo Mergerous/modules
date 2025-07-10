@@ -13,7 +13,7 @@ namespace Modules.Views
     {
         private View view;
         
-        public void Subscribe(View view)
+        public virtual void Subscribe(View view)
         {
             base.Subscribe();
             this.view = view;

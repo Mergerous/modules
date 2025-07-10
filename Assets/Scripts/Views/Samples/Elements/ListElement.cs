@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Modules.Views;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -22,6 +21,22 @@ namespace Modules.Views
         
         public IReadOnlyList<View> Instances => instances;
         public Transform Content => content;
+
+        public View this[string key]
+        {
+            get
+            {
+                foreach (View instance in instances)
+                {
+                    if (string.Equals(instance.Key, key, StringComparison.Ordinal))
+                    {
+                        return instance;
+                    }
+                }
+
+                return default;
+            }
+        }
 
         public View CreateInstance(string key)
         {
@@ -46,18 +61,8 @@ namespace Modules.Views
             {
                 Object.Destroy(instance.gameObject);
             }
-            
+
             instances.Clear();
-        }
-
-        public override void Initialize()
-        {
-            
-        }
-
-        public override void Dispose()
-        {
-            
         }
     }
 }

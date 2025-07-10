@@ -18,6 +18,8 @@ namespace Modules.Views
                 .WithParameter(settings)
                 .WithParameter(container);
 
+            builder.Register<AnchorManager>(Lifetime.Singleton);
+            
             builder.Register<PagesPresenter>(Lifetime.Transient);
             builder.Register<TabPresenter>(Lifetime.Transient);
             builder.Register<VisibilityPresenter>(Lifetime.Transient);

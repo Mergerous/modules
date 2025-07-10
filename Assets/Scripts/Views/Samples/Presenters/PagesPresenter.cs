@@ -9,41 +9,47 @@ namespace Modules.Views
     public sealed class PagesPresenter : Presenter
     {
         private readonly Dictionary<string, PagePresenter> itemPresenters;
-        private readonly ListElement pageListElement;
-        private readonly ListElement tabListElement;
         private readonly IPresenterFactory factory;
+        
+        private ListElement pageListElement;
+        private ListElement tabListElement;
 
-        public PagesPresenter(View view, IPresenterFactory factory)
+        public PagesPresenter(IPresenterFactory factory)
         {
             this.factory = factory;
             itemPresenters = new Dictionary<string, PagePresenter>();
+        }
+
+        public void Subscribe(View view)
+        {
+            base.Subscribe();
             pageListElement = view.GetElement<ListElement>("page_list");
             tabListElement = view.GetElement<ListElement>("tab_list");
         }
 
-        public void AddTab<T>(string tabKey, Action<T> callback = default, string pageTemplateKey = "default")
+        public void AddTab<T>(string tabKey, string pageKey, Action<T> callback = default)
             where T : PagePresenter
         {
-            View tabView = tabListElement.CreateInstance("default");
+            View tabView = tabListElement[tabKey];
             TabPresenter tabPresenter = factory.Create<TabPresenter>();
-            tabPresenter.Subscribe(tabKey, tabView);
+            tabPresenter.Subscribe(tabView);
 
             tabPresenter.OnClicked
-                .Select(isOn => (isOn, presenter: SelectPage<T>(tabKey, isOn, pageTemplateKey)))
+                .Select(isOn => (isOn, presenter: SelectPage<T>(tabKey, pageKey, isOn)))
                 .Where(tuple => tuple.isOn)
                 .Subscribe(tuple => callback?.Invoke(tuple.presenter))
                 .AddTo(disposables);
         }
 
-        private T SelectPage<T>(string pageKey, bool isSelected, string templateKey = "default")
+        private T SelectPage<T>(string tabKey, string pageKey, bool isSelected)
             where T : PagePresenter
         {
-            if (!itemPresenters.TryGetValue(pageKey, out PagePresenter itemPresenter))
+            if (!itemPresenters.TryGetValue(tabKey, out PagePresenter itemPresenter))
             {
-                View pageView = pageListElement.CreateInstance(templateKey);
+                View pageView = pageListElement[pageKey];
                 itemPresenter = factory.Create<T>();
                 itemPresenter.Subscribe(pageView);
-                itemPresenters.Add(pageKey, itemPresenter);
+                itemPresenters.Add(tabKey, itemPresenter);
             }
             
             itemPresenter.Select(isSelected);
@@ -54,6 +60,7 @@ namespace Modules.Views
         public override void Unsubscribe()
         {
             base.Unsubscribe();
+            factory.Dispose();
             itemPresenters.Clear();
         }
     }
