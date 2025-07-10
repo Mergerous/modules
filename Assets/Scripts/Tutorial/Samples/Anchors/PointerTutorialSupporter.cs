@@ -1,4 +1,3 @@
-using System;
 using JetBrains.Annotations;
 using Modules.Views;
 
@@ -8,23 +7,22 @@ namespace Modules.Tutorial
     public sealed class PointerTutorialSupporter : ITutorialSupporter
     {
         private readonly AnchorManager anchorManager;
-        private readonly Func<string, ViewHandle> viewFactory;
+        private readonly IHandleFactory factory;
+        private IViewHandle handle;
 
-        private ViewHandle handle;
-
-        public PointerTutorialSupporter(AnchorManager anchorManager, Func<string, ViewHandle> viewFactory)
+        public PointerTutorialSupporter(AnchorManager anchorManager, IHandleFactory factory)
         {
             this.anchorManager = anchorManager;
-            this.viewFactory = viewFactory;
+            this.factory = factory;
         }
 
         public void Support(ITutorialSupport support)
         {
             if (support is PointerTutorialSupport anchorTutorialSupport)
             {
-                handle = viewFactory(anchorTutorialSupport.viewKey);
+                handle = factory.CreateHandle(anchorTutorialSupport.viewKey);
                 anchorManager.GetAnchor(anchorTutorialSupport.anchorKey, 
-                    anchorTransform => handle.View.GetElement<TransformElement>("pointer_transform").Transform.position = anchorTransform.position);
+                    anchorTransform => handle.View.GetElement<TransformElement>(anchorTutorialSupport.pointerKey).Transform.position = anchorTransform.position);
             }
         }
 

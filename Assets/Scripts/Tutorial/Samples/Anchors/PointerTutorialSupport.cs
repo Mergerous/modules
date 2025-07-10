@@ -7,5 +7,6 @@ namespace Modules.Tutorial
     {
         public string anchorKey;
         public string viewKey;
+        public string pointerKey;
     }
 }
