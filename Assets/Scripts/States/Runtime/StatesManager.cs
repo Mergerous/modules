@@ -116,10 +116,10 @@ namespace Modules.States
         public void Close<T>(StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0)
             where T : IState
         {
-            if (options.HasFlag(StateOptions.LinkWithLastOnStack))
+            StateMachine machine = GetMachine(layer);
+            if (machine.stack.Count > 0)
             {
-                StateMachine machine = GetMachine(layer);
-                if (machine.stack.Count > 0)
+                if (options.HasFlag(StateOptions.LinkWithLastOnStack))
                 {
                     IState state = machine.stack.Peek();
                     if (machine.linkedStates.TryGetValue(state, out HashSet<IState> linked))
@@ -136,7 +136,14 @@ namespace Modules.States
                         }
                     }
                 }
+
+                if (options.HasFlag(StateOptions.AddToStack))
+                {
+                    IState state = machine.stack.Pop();
+                    state.Close();
+                }
             }
+
         }
 
         public void ClearStack()
