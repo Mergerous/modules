@@ -1,6 +1,6 @@
 {
   "name": "com.mergerous.modules-states",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "displayName": "Modules.States",
   "description": "This is states package",
   "unity": "6000.0",
