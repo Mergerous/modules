@@ -9,7 +9,7 @@ namespace Modules.Cameras
     {
         private readonly CamerasContainer camerasContainer;
         
-        public Camera MainCamera => Camera.main;
+        public Camera MainCamera => camerasContainer.MainCamera;
 
         public CameraManager(CamerasContainer camerasContainer)
         {
@@ -28,17 +28,17 @@ namespace Modules.Cameras
 
         public CinemachineVirtualCameraBase GetChildCamera(int index)
         { 
-            return camerasContainer.CinemachineStateDrivenCamera.ChildCameras[index];
+            return camerasContainer.StateDrivenCamera.ChildCameras[index];
         }
 
         public void AddTargetGroupMember(Transform transform, float weight, float radius)
         {
-            camerasContainer.CinemachineTargetGroup.AddMember(transform, weight, radius);
+            camerasContainer.TargetGroup.AddMember(transform, weight, radius);
         }
 
         public void RemoveTargetGroupMember(Transform transform)
         {
-            camerasContainer.CinemachineTargetGroup.RemoveMember(transform);
+            camerasContainer.TargetGroup.RemoveMember(transform);
         }
     }
 

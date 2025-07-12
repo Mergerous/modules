@@ -5,12 +5,9 @@ namespace Modules.Cameras
 {
     public class CamerasContainer : MonoBehaviour
     {
-        [SerializeField] private Animator _stateDrivenAnimator;
-        [SerializeField] private CinemachineTargetGroup _cinemachineTargetGroup;
-        [SerializeField] private CinemachineStateDrivenCamera _cinemachineStateDriven;
-
-        public CinemachineTargetGroup CinemachineTargetGroup => _cinemachineTargetGroup;
-        public CinemachineStateDrivenCamera CinemachineStateDrivenCamera => _cinemachineStateDriven;
-        public Animator StateDrivenAnimator => _stateDrivenAnimator;
+        [field: SerializeField] public Camera MainCamera { get; private set; }
+        [field: SerializeField] public Animator StateDrivenAnimator { get; private set; }
+        [field: SerializeField] public CinemachineTargetGroup TargetGroup { get; private set; }
+        [field: SerializeField] public CinemachineStateDrivenCamera StateDrivenCamera { get; private set; }
     }
 }
