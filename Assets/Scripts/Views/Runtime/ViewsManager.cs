@@ -10,7 +10,6 @@ namespace Modules.Views
     {
         private readonly ViewsContainer viewsContainer;
         private readonly ViewsSettings viewsSettings;
-        private readonly Dictionary<string, ViewHandle> cachedHandles = new();
 
         public ViewsManager(ViewsSettings viewsSettings, ViewsContainer viewsContainer)
         {
@@ -18,20 +17,8 @@ namespace Modules.Views
             this.viewsContainer = viewsContainer;
         }
         
-        IViewHandle IHandleFactory.CreateHandle(string key, bool shouldCache = false)
+        IViewHandle IHandleFactory.CreateHandle(string key)
         {
-            if (shouldCache)
-            {
-                if (cachedHandles.TryGetValue(key, out ViewHandle handle))
-                {
-                    return handle;
-                }
-                
-                handle = new ViewHandle(key, CreateView, DestroyView);
-                cachedHandles.Add(key, handle);
-                return handle;
-            }
-            
             return new ViewHandle(key, CreateView, DestroyView);
         }
 
