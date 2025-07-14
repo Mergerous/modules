@@ -1,8 +1,21 @@
-﻿namespace Modules.States
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Modules.States
 {
     public interface IState
     {
-        void Open();
+        void Open()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task OpenAsync(CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+        
         void Close();
         
         void OnReturn()

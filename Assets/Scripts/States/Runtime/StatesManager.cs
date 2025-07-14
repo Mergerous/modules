@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 
 namespace Modules.States
@@ -25,31 +27,49 @@ namespace Modules.States
 
             return machine;
         }
+
+        public void Open<T>(StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0) 
+            where T : IState
+        {
+            T state = statesList.OfType<T>().First();
+            Prepare(state, options, layer);
+            state.Open();
+        }
+        
+        public void Open<T, TPayload>(TPayload payload, StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0) 
+            where T : IState<TPayload>
+        {
+            T state = statesList.OfType<T>().First();
+            state.Payload = payload;
+            Prepare(state, options, layer);
+            state.Open();
+        }
+        
+        public async Task OpenAsync<T>(CancellationToken cancellationToken, StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0) 
+            where T : IState
+        {
+            T state = statesList.OfType<T>().First();
+            Prepare(state, options, layer);
+            await state.OpenAsync(cancellationToken);
+        }
+        
+        public async Task OpenAsync<T, TPayload>(TPayload payload, CancellationToken cancellationToken, StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0) 
+            where T : IState<TPayload>
+        {
+            T state = statesList.OfType<T>().First();
+            state.Payload = payload;
+            Prepare(state, options, layer);
+            await state.OpenAsync(cancellationToken);
+        }
         
         public StatesManager Open(string key, StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0)
         {
             if (states.TryGetValue(key, out IState item))
             {
-                Open(item, options, layer);
+                Prepare(item, options, layer);
+                item.Open();
             }
 
-            return this;
-        }
-
-        public StatesManager Open<T>(StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0) 
-            where T : IState
-        {
-            T state = statesList.OfType<T>().First();
-            Open(state, options, layer);
-            return this;
-        }
-        
-        public StatesManager Open<T, TPayload>(TPayload payload, StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0) 
-            where T : IState<TPayload>
-        {
-            T state = statesList.OfType<T>().First();
-            state.Payload = payload;
-            Open(state, options, layer);
             return this;
         }
 
@@ -58,7 +78,8 @@ namespace Modules.States
             if (states.TryGetValue(key, out IState item) && item is IState<T> argumentItem)
             {
                 argumentItem.Payload = arguments;
-                Open(argumentItem, options, layer);
+                Prepare(argumentItem, options, layer);
+                argumentItem.Open();
             }
             
             return this;
@@ -72,7 +93,7 @@ namespace Modules.States
             }
         }
 
-        private void Open(IState item, StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0)
+        private void Prepare(IState item, StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0)
         {
             if (options.HasFlag(StateOptions.ClosePrevious))
             {
@@ -101,8 +122,6 @@ namespace Modules.States
 
                 linked.Add(item);
             }
-
-            item.Open();
         }
         
 
