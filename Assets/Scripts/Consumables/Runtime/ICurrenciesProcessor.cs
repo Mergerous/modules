@@ -4,24 +4,25 @@ using System.Threading.Tasks;
 
 namespace Consumables.Currencies
 {
-    public interface ICurrenciesProcessor
+    public interface ICurrenciesProcessor<in T>
+        where T : ICurrencyData
     {
-        void AddCurrency(string key, int value)
+        void AddCurrency(T data)
         {
             throw new NotImplementedException();
         }
 
-        Task AddCurrencyAsync(string key, int value, CancellationToken token)
+        Task AddCurrencyAsync(T data, CancellationToken token)
         {
             throw new NotImplementedException();
         }
 
-        bool TryRemoveCurrency(string key, int value)
+        bool TryRemoveCurrency(T data)
         {
             throw new NotImplementedException();
         }
 
-        Task<bool> TryRemoveCurrencyAsync(string key, int value, CancellationToken token)
+        Task<bool> TryRemoveCurrencyAsync(T data, CancellationToken token)
         {
             throw new NotImplementedException();
         }

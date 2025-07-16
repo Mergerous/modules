@@ -9,9 +9,9 @@ namespace Consumables
     [UsedImplicitly]
     public sealed class CurrenciesDebug : IDebuggable
     {
-        private readonly ICurrenciesProcessor currenciesProcessor;
+        private readonly ICurrenciesProcessor<CurrencyData> currenciesProcessor;
 
-        public CurrenciesDebug(ICurrenciesProcessor currenciesProcessor)
+        public CurrenciesDebug(ICurrenciesProcessor<CurrencyData> currenciesProcessor)
         {
             this.currenciesProcessor = currenciesProcessor;
         }
@@ -58,7 +58,7 @@ namespace Consumables
                 text = "Add Currency"
             };
             
-            getButton.clicked += () => currenciesProcessor.AddCurrency(dropdown.value, countField.value);
+            getButton.clicked += () => currenciesProcessor.AddCurrency(new CurrencyData(dropdown.value, countField.value));
             
             layout.Add(dropdown);
             layout.Add(countField);

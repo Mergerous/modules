@@ -3,8 +3,9 @@ using System;
 namespace Consumables.Currencies
 {
     [Serializable]
-    public sealed class CurrencyData
+    public sealed class CurrencyData : ICurrencyData
     {
+        public string Key { get; set; }
         public string key;
         public int value;
         
