@@ -1,6 +1,7 @@
 using System;
 using Modules.Data;
 using Modules.States;
+using Modules.Views;
 using Settings;
 using UnityEngine;
 using VContainer;
@@ -21,23 +22,14 @@ namespace Modules.Settings
             // Views
             //
             builder.Register<SettingsPresenter>(Lifetime.Singleton);
-            builder.Register<SettingsButtonPresenter>(Lifetime.Transient);
-            builder.Register<SettingsTogglePresenter>(Lifetime.Transient);
-            builder.RegisterFactory<SettingsButtonPresenter>(container => container.Resolve<SettingsButtonPresenter>, Lifetime.Singleton);
-            builder.RegisterFactory<SettingsTogglePresenter>(container => container.Resolve<SettingsTogglePresenter>, Lifetime.Singleton);
+            builder.Register<SettingsItemPresenter>(Lifetime.Transient);
+            builder.RegisterFactory<SettingsItemPresenter>(container => container.Resolve<SettingsItemPresenter>, Lifetime.Singleton);
             
             // Models
             //
             builder.Register<SettingsModel>(Lifetime.Singleton)
+                .WithParameter(resolver => resolver.Resolve<DataManager>().Load(SettingsConstants.SETTINGS_DATA_SAVE_KEY, new SettingsData()))
                 .WithParameter(remoteInfo);
-            
-            // Data
-            //
-            builder.RegisterFactory<SettingsData>(container =>
-            {
-                DataManager dataManager = container.Resolve<DataManager>();
-                return () => dataManager.Load(SettingsConstants.SETTINGS_DATA_SAVE_KEY, new SettingsData());
-            }, Lifetime.Singleton);
 
             builder.Register<SettingsManager>(Lifetime.Singleton);
             builder.Register<IToggleSettingsProcessor, VibrationsSettingsProcessor>(Lifetime.Singleton);

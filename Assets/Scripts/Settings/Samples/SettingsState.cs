@@ -19,13 +19,13 @@ namespace Modules.Settings
         public void Open()
         {
             presenter.Subscribe();
-            adsManager.ShowBanner();
+            // adsManager.ShowBanner();
         }
 
         public void Close()
         {
             presenter.Unsubscribe();
-            adsManager.HideBanner();
+            // adsManager.HideBanner();
         }
     }
 }

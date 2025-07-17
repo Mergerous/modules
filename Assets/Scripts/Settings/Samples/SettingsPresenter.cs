@@ -9,19 +9,16 @@ namespace Modules.Settings
     {
         private readonly ViewHandle handle;
         private readonly SettingsModel model;
-        private readonly Func<SettingsTogglePresenter> toggleFactory;
-        private readonly Func<SettingsButtonPresenter> buttonFactory;
+        private readonly Func<SettingsItemPresenter> itemFactory;
 
         public SettingsPresenter(
             SettingsModel settingsModel,
-            Func<SettingsTogglePresenter> toggleFactory,
-            Func<SettingsButtonPresenter> buttonFactory,
+            Func<SettingsItemPresenter> itemFactory,
             Func<string, ViewHandle> factory)
         {
             handle = factory(SettingsConstants.SETTINGS_VIEW_KEY);
             model = settingsModel;
-            this.toggleFactory = toggleFactory;
-            this.buttonFactory = buttonFactory;
+            this.itemFactory = itemFactory;
         }
 
         public override void Subscribe()
@@ -30,20 +27,9 @@ namespace Modules.Settings
             ListElement listElement = handle.View.GetElement<ListElement>("list");
             foreach (ISettingsItemModel itemModel in model.ItemModels)
             {
-                switch (itemModel)
-                {
-                    case IToggleContent toggleContent:
-                        View toggleView = listElement.CreateInstance("toggle");
-                        SettingsTogglePresenter togglePresenter = toggleFactory();
-                        togglePresenter.Subscribe(toggleView, toggleContent.IsEnabled, itemModel);
-                        break;
-                    case IButtonContent buttonContent:
-                        View buttonView = listElement.CreateInstance("button");
-                        SettingsButtonPresenter buttonPresenter = buttonFactory();
-                        buttonPresenter.Subscribe(buttonView, itemModel);
-                        break;
-                }
-             
+                View toggleView = listElement.CreateInstance("default");
+                SettingsItemPresenter itemPresenter = itemFactory();
+                itemPresenter.Subscribe(toggleView, itemModel);
             }
         }
 
