@@ -1,6 +1,6 @@
 {
   "name": "com.mergerous.modules-settings",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "displayName": "Modules.Settings",
   "description": "This is an example package",
   "unity": "6000.0",
