@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -33,6 +35,22 @@ namespace Modules.Views
         public void RemoveAnchor(string anchorKey)
         {
             anchors.Remove(anchorKey);
+        }
+
+        public async Task<Transform> GetAnchorAsync(string key, CancellationToken cancellationToken)
+        {
+            Transform value;
+            
+            while (!anchors.TryGetValue(key, out value))
+            {
+                await Task.Yield();
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    throw new Exception();
+                }
+            }
+
+            return value;
         }
 
         public void GetAnchor(string key, Action<Transform> callback)
