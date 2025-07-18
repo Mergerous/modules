@@ -19,9 +19,9 @@ namespace Modules.Views
             callbacks = new Dictionary<string, Action<Transform>>();
         }
         
-        public void AddAnchor(string anchorKey, Transform anchor)
+        public void AddAnchor(string anchorKey, Transform anchor, bool shouldOverride = false)
         {
-            if (!anchors.TryAdd(anchorKey, anchor))
+            if (!anchors.TryAdd(anchorKey, anchor) && shouldOverride)
             {
                 anchors[anchorKey] = anchor;
             }
