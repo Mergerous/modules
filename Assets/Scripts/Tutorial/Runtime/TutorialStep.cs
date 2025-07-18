@@ -7,6 +7,6 @@ namespace Modules.Tutorial
     public sealed class TutorialStep
     {
         [SerializeReference] public ITutorialHandle handle;
-        [SerializeReference] public ITutorialSupport support;
+        [SerializeReference] public ITutorialSupport[] supports;
     }
 }
