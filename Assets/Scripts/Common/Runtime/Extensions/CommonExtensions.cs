@@ -43,7 +43,7 @@ namespace Modules.Common.Extensions
         {
             Array values = Enum.GetValues(typeof(T));
             int index = Array.IndexOf(values, source);
-            object destination = index < values.Length ? values.GetValue(values.Length - 1) : values.GetValue(index);
+            object destination = index + 1 < values.Length ? values.GetValue(index + 1) : values.GetValue(values.Length - 1);
             return (T)destination;
         }
 
