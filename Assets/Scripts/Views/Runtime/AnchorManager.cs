@@ -37,7 +37,8 @@ namespace Modules.Views
             anchors.Remove(anchorKey);
         }
 
-        public async Task<Transform> GetAnchorAsync(string key, CancellationToken cancellationToken)
+        public async Task<T> GetAnchorAsync<T>(string key, CancellationToken cancellationToken)
+            where T : Transform
         {
             Transform value;
             
@@ -50,7 +51,7 @@ namespace Modules.Views
                 }
             }
 
-            return value;
+            return value as T;
         }
 
         public void GetAnchor(string key, Action<Transform> callback)
