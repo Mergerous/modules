@@ -1,6 +1,6 @@
 {
   "name": "com.mergerous.modules-settings",
-  "version": "1.0.2",
+  "version": "1.0.7",
   "displayName": "Modules.Settings",
   "description": "This is an example package",
   "unity": "6000.0",
@@ -11,12 +11,5 @@
   "author": {
     "name": "Mergerous",
     "url": "https://github.com/Mergerous"
-  },
-  "samples": [
-    {
-      "displayName": "Samples",
-      "description": "Samples",
-      "path": "Samples"
-    }
-  ]
+  }
 }

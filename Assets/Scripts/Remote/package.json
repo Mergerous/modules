@@ -1,6 +1,6 @@
 {
   "name": "com.mergerous.modules-remote",
-  "version": "2.0.2",
+  "version": "2.0.7",
   "displayName": "Modules.Remote",
   "description": "This is an example package",
   "unity": "6000.0",
@@ -14,12 +14,5 @@
   "author": {
     "name": "Mergerous",
     "url": "https://github.com/Mergerous"
-  },
-  "samples": [
-    {
-      "displayName": "Samples",
-      "description": "Samples",
-      "path": "Samples"
-    }
-  ]
+  }
 }

@@ -1,6 +1,6 @@
 {
   "name": "com.mergerous.modules-tutorial",
-  "version": "1.2.1",
+  "version": "1.2.6",
   "displayName": "Modules.Tutorial",
   "description": "This is a times package",
   "unity": "6000.0",
@@ -11,12 +11,5 @@
   "author": {
     "name": "Mergerous",
     "url": "https://github.com/Mergerous"
-  },
-  "samples": [
-    {
-      "displayName": "Samples",
-      "description": "Samples",
-      "path": "Samples"
-    }
-  ]
+  }
 }

@@ -1,6 +1,6 @@
 {
   "name": "com.mergerous.modules-analytics",
-  "version": "1.1.0",
+  "version": "1.1.5",
   "displayName": "Modules.Analytics",
   "description": "This is an example package",
   "unity": "6000.0",
@@ -14,12 +14,5 @@
   "author": {
     "name": "Mergerous",
     "url": "https://github.com/Mergerous"
-  },
-  "samples": [
-    {
-      "displayName": "Samples",
-      "description": "Samples",
-      "path": "Samples"
-    }
-  ]
+  }
 }

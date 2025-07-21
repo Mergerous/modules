@@ -1,6 +1,6 @@
 {
   "name": "com.mergerous.modules-ads",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "displayName": "Modules.Ads",
   "description": "This is an example package",
   "unity": "6000.0",
@@ -14,12 +14,5 @@
   "author": {
     "name": "Mergerous",
     "url": "https://github.com/Mergerous"
-  },
-  "samples": [
-    {
-      "displayName": "Samples",
-      "description": "Samples",
-      "path": "Samples"
-    }
-  ]
+  }
 }

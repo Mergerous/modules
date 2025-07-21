@@ -1,6 +1,6 @@
 {
   "name": "com.mergerous.modules-audio",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "displayName": "Modules.Audio",
   "description": "This is an example package",
   "unity": "2019.1",
@@ -11,12 +11,5 @@
   "author": {
     "name": "Mergerous",
     "url": "https://github.com/Mergerous"
-  },
-  "samples": [
-    {
-      "displayName": "Samples",
-      "description": "Samples",
-      "path": "Samples"
-    }
-  ]
+  }
 }

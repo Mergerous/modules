@@ -1,6 +1,6 @@
 {
   "name": "com.mergerous.modules-states",
-  "version": "1.3.5",
+  "version": "1.4.0",
   "displayName": "Modules.States",
   "description": "This is states package",
   "unity": "6000.0",
@@ -11,12 +11,5 @@
   "author": {
     "name": "Mergerous",
     "url": "https://github.com/Mergerous"
-  },
-  "samples": [
-    {
-      "displayName": "Samples",
-      "description": "Samples",
-      "path": "Samples"
-    }
-  ]
+  }
 }
