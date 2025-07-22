@@ -1,0 +1,17 @@
+{
+    "name": "Modules.Audio.VContainer",
+    "rootNamespace": "",
+    "references": [
+        "GUID:f688df3a0372b3e4da6fcf1cb60734f6",
+        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

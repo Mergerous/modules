@@ -1,0 +1,19 @@
+{
+    "name": "Modules.Rendering",
+    "rootNamespace": "",
+    "references": [
+        "GUID:3f088d0ad8fa0074fa0a4929cda3096f",
+        "GUID:1723440b455cb0340a3d24f828acfdde"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "MODULES_RENDERING"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

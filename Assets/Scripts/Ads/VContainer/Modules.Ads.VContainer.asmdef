@@ -1,0 +1,17 @@
+{
+    "name": "Modules.Ads.VContainer",
+    "rootNamespace": "",
+    "references": [
+        "GUID:0a8e38bade51d5b4c83ba1b24f0dae63",
+        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

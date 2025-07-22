@@ -1,0 +1,17 @@
+{
+    "name": "Modules.Analytics.VContainer",
+    "rootNamespace": "",
+    "references": [
+        "GUID:baaccbb7aa38ac44ba117e2a56a72f6f",
+        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

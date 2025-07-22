@@ -1,9 +1,7 @@
 {
     "name": "Modules.Analytics",
     "rootNamespace": "",
-    "references": [
-        "Modules.Common"
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
