@@ -10,7 +10,6 @@
   "licensesUrl": "https://example.com/licensing.html",
   "dependencies": {
     "com.unity.nuget.newtonsoft-json": "3.2.1",
-    "jp.hadashikick.vcontainer": "1.16.8"
   },
   "author": {
     "name": "Mergerous",
