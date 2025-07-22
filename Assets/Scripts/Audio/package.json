@@ -8,6 +8,9 @@
   "documentationUrl": "https://example.com/",
   "changelogUrl": "https://example.com/changelog.html",
   "licensesUrl": "https://example.com/licensing.html",
+  "dependencies": {
+    "jp.hadashikick.vcontainer": "1.16.8"
+  },
   "author": {
     "name": "Mergerous",
     "url": "https://github.com/Mergerous"

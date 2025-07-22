@@ -9,7 +9,8 @@
   "changelogUrl": "https://example.com/changelog.html",
   "licensesUrl": "https://example.com/licensing.html",
   "dependencies": {
-    "com.unity.cinemachine": "3.1.3"
+    "com.unity.cinemachine": "3.1.3",
+    "jp.hadashikick.vcontainer": "1.16.8"
   },
   "author": {
     "name": "Mergerous",
