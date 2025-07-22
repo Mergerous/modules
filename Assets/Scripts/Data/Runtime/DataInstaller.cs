@@ -1,10 +1,9 @@
 using System;
-using Modules.Data;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-namespace Modules.Data
+namespace Modules.Data.VContainer
 {
     [Serializable]
     public sealed class DataInstaller : IInstaller
