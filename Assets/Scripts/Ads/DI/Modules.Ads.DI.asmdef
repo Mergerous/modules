@@ -1,5 +1,5 @@
 {
-    "name": "Modules.Ads.VContainer",
+    "name": "Modules.Ads.DI",
     "rootNamespace": "",
     "references": [
         "GUID:0a8e38bade51d5b4c83ba1b24f0dae63",
