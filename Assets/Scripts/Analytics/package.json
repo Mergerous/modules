@@ -10,7 +10,6 @@
   "licensesUrl": "https://example.com/licensing.html",
   "dependencies": {
     "com.google.firebase.analytics": "12.0.0",
-    "jp.hadashikick.vcontainer": "1.16.8"
   },
   "author": {
     "name": "Mergerous",

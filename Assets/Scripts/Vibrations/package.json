@@ -9,8 +9,7 @@
   "changelogUrl": "https://example.com/changelog.html",
   "licensesUrl": "https://example.com/licensing.html",
   "dependencies": {
-    "com.github.lofelt.nicevibrations": "4.1.203",
-    "jp.hadashikick.vcontainer": "1.16.8"
+    "com.github.lofelt.nicevibrations": "4.1.203"
   },
   "author": {
     "name": "Mergerous",

@@ -10,7 +10,6 @@
   "licensesUrl": "https://example.com/licensing.html",
   "dependencies": {
     "com.appodeal.mediation": "3.5.1",
-    "jp.hadashikick.vcontainer": "1.16.8"
   },
   "author": {
     "name": "Mergerous",
