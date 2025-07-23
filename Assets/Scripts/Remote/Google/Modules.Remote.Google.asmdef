@@ -1,0 +1,16 @@
+{
+    "name": "Modules.Remote.Google",
+    "rootNamespace": "",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "MODULES_REMOTE_GOOGLE"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
