@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -10,7 +11,6 @@ namespace Modules.States
     public sealed class StatesManager
     {
         private Dictionary<int, StateMachine> machines = new();
-        private Dictionary<string, IState> states = new();
         private IEnumerable<IState> statesList;
         
         public void Initialize(IEnumerable<IState> states)
@@ -28,10 +28,12 @@ namespace Modules.States
             return machine;
         }
 
-        public void Open<T>(StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0) 
-            where T : IState
+        public void Open<T>(StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0)
+            where T : IState => Open(typeof(T), options, layer);
+
+        public void Open(Type type, StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0)
         {
-            T state = statesList.OfType<T>().First();
+            IState state = statesList.First(state => state.GetType() == type);
             Prepare(state, options, layer);
             state.Open();
         }
@@ -44,11 +46,13 @@ namespace Modules.States
             Prepare(state, options, layer);
             state.Open();
         }
-        
-        public async Task OpenAsync<T>(CancellationToken cancellationToken, StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0) 
-            where T : IState
+
+        public async Task OpenAsync<T>(CancellationToken cancellationToken, StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0)
+            where T : IState => await OpenAsync(typeof(T), cancellationToken, options, layer);
+
+        public async Task OpenAsync(Type type, CancellationToken cancellationToken, StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0)
         {
-            T state = statesList.OfType<T>().First();
+            IState state = statesList.First(state => state.GetType() == type);
             Prepare(state, options, layer);
             await state.OpenAsync(cancellationToken);
         }
@@ -60,37 +64,6 @@ namespace Modules.States
             state.Payload = payload;
             Prepare(state, options, layer);
             await state.OpenAsync(cancellationToken);
-        }
-        
-        public StatesManager Open(string key, StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0)
-        {
-            if (states.TryGetValue(key, out IState item))
-            {
-                Prepare(item, options, layer);
-                item.Open();
-            }
-
-            return this;
-        }
-
-        public StatesManager Open<T>(string key, StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0, T arguments = default)
-        {
-            if (states.TryGetValue(key, out IState item) && item is IState<T> argumentItem)
-            {
-                argumentItem.Payload = arguments;
-                Prepare(argumentItem, options, layer);
-                argumentItem.Open();
-            }
-            
-            return this;
-        }
-
-        public void Reopen(string key)
-        {
-            if (states.TryGetValue(key, out IState item))
-            {
-                item.OnReopen();
-            }
         }
 
         private void Prepare(IState item, StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0)
