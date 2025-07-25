@@ -34,6 +34,14 @@ namespace Modules.States
             
         }
     }
+    
+    public interface IResultState<T> : IState
+    {
+        new Task<T> OpenAsync(CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+    }
 
     public interface IState<in T> : IState
     {

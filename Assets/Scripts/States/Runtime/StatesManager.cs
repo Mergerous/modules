@@ -65,6 +65,15 @@ namespace Modules.States
             Prepare(state, options, layer);
             await state.OpenAsync(cancellationToken);
         }
+        
+        public async Task<TResult> OpenAsync<T, TResult>(CancellationToken cancellationToken, StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0) 
+            where T : IResultState<TResult>
+        {
+            T state = statesList.OfType<T>().First();
+            Prepare(state, options, layer);
+            TResult result = await state.OpenAsync(cancellationToken);
+            return result;
+        }
 
         private void Prepare(IState item, StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0)
         {
