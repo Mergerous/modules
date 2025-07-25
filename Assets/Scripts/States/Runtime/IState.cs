@@ -43,6 +43,11 @@ namespace Modules.States
         }
     }
 
+    public interface IResultState<in TPayload, TResult> : IResultState<TResult>, IState<TPayload>
+    {
+        
+    }
+
     public interface IState<in T> : IState
     {
         T Payload { set; }
