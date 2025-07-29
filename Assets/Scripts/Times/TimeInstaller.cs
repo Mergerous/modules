@@ -20,12 +20,8 @@ namespace Modules.Times
             
             // Models
             //
-            builder.Register<TimeModel>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
-            
-            // Data
-            //
-            builder.RegisterFactory<TimeData>(container => 
-                () => container.Resolve<DataManager>().Load(TimeConstants.TIME_DATA_SAVE_KEY, new TimeData()), Lifetime.Scoped);
+            builder.Register<TimeModel>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf()
+                .WithParameter(resolver => resolver.Resolve<DataManager>().Load(TimeConstants.TIME_DATA_SAVE_KEY, new TimeData()));
         }
     }
 }

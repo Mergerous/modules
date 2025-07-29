@@ -28,13 +28,13 @@ namespace Modules.Times
 
         public void AddShift(TimeSpan shift)
         {
-            timeModel.Data.shift += shift.TotalSeconds;
+            timeModel.Shift += shift.TotalSeconds;
             dataManager.Save(TimeConstants.TIME_DATA_SAVE_KEY, timeModel.Data);
         }
         
         public void RemoveShift(TimeSpan shift)
         {
-            timeModel.Data.shift -= shift.TotalSeconds;
+            timeModel.Shift -= shift.TotalSeconds;
             dataManager.Save(TimeConstants.TIME_DATA_SAVE_KEY, timeModel.Data);
         }
 
