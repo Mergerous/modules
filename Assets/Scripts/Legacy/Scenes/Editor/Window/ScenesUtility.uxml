@@ -1,8 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
-    <Style src="project://database/Assets/Modules/Scenes/Editor/Window/styles.uss?fileID=7433441132597879392&amp;guid=289a3bffdebb7f3408005ef88b7a9898&amp;type=3#styles" />
-    <ui:VisualElement name="scenes-options-panel" style="flex-direction: row; justify-content: space-around; flex-shrink: 0;">
-        <ui:Button text="Load" display-tooltip-when-elided="true" class="mini-button-middle" />
-        <ui:Button text="Clear" display-tooltip-when-elided="true" class="mini-button-right" />
-        <uie:ObjectField type="UnityEditor.DefaultAsset, UnityEditor" name="scene-folder-field" class="element-grow" style="flex-grow: 1;" />
-    </ui:VisualElement>
-</ui:UXML>
