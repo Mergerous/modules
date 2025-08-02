@@ -4,15 +4,13 @@ namespace Modules.States
 {
     public sealed class StateMachine
     {
-        public HashSet<IState> nonOrderedStates;
-        public Stack<IState> stack;
-        public Dictionary<IState, HashSet<IState>> linkedStates;
+        public Stack<HashSet<IState>> stack;
+        public List<StateMachine> child;
 
         public StateMachine()
         {
-            nonOrderedStates = new HashSet<IState>();
-            stack = new Stack<IState>();
-            linkedStates = new Dictionary<IState, HashSet<IState>>();
+            stack = new Stack<HashSet<IState>>();
+            child = new();
         }
     }
 }

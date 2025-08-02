@@ -2,7 +2,7 @@ using System;
 
 namespace Modules.States
 {
-    [Flags]
+    [Flags, Obsolete]
     public enum StateOptions
     {
         None                            = 0,

@@ -17,22 +17,6 @@ namespace Modules.States
         }
         
         void Close();
-        
-        void OnReturn()
-        {
-            
-        }
-
-        void OnReopen()
-        {
-            Close();
-            Open();
-        }
-        
-        void OnLinkedStateClosed()
-        {
-            
-        }
     }
     
     public interface IResultState<T> : IState
