@@ -28,7 +28,7 @@ namespace Modules.States
 
         public void Close()
         {
-            state.Close();
+            state?.Close();
             foreach (StateNode childNode in nodes)
             {
                 childNode.Close();
@@ -69,80 +69,89 @@ namespace Modules.States
             return machine;
         }
 
-        public void Open<T>(StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0)
-            where T : IState => Open(typeof(T), options, layer);
+        public void Open<T>(int layer = 0, StateOptions options = StateOptions.CloseAndRemove)
+            where T : IState => Open(typeof(T), layer, options);
 
-        public void Open(Type type, StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0)
+        public void Open(Type type, int layer = 0, StateOptions options = StateOptions.CloseAndRemove)
         {
             IState state = statesList.First(state => state.GetType() == type);
-            Prepare(state, options, layer);
+            Prepare(state, layer, options);
             state.Open();
         }
         
-        public void Open<T, TPayload>(TPayload payload, StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0) 
+        public void Open<T, TPayload>(TPayload payload, int layer = 0, StateOptions options = StateOptions.CloseAndRemove) 
             where T : IState<TPayload>
         {
             T state = statesList.OfType<T>().First();
             state.Payload = payload;
-            Prepare(state, options, layer);
+            Prepare(state, layer, options);
             state.Open();
         }
 
-        public async Task OpenAsync<T>(CancellationToken cancellationToken, StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0)
-            where T : IState => await OpenAsync(typeof(T), cancellationToken, options, layer);
+        public async Task OpenAsync<T>(CancellationToken cancellationToken, int layer = 0, StateOptions options = StateOptions.CloseAndRemove)
+            where T : IState => await OpenAsync(typeof(T), cancellationToken, layer, options);
 
-        public async Task OpenAsync(Type type, CancellationToken cancellationToken, StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0)
+        public async Task OpenAsync(Type type, CancellationToken cancellationToken, int layer = 0, StateOptions options = StateOptions.CloseAndRemove)
         {
             IState state = statesList.First(state => state.GetType() == type);
-            Prepare(state, options, layer);
+            Prepare(state, layer, options);
             await state.OpenAsync(cancellationToken);
         }
         
-        public async Task OpenAsync<T, TPayload>(TPayload payload, CancellationToken cancellationToken, StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0) 
+        public async Task OpenAsync<T, TPayload>(TPayload payload, CancellationToken cancellationToken, int layer = 0, StateOptions options = StateOptions.CloseAndRemove) 
             where T : IState<TPayload>
         {
             T state = statesList.OfType<T>().First();
             state.Payload = payload;
-            Prepare(state, options, layer);
+            Prepare(state, layer, options);
             await state.OpenAsync(cancellationToken);
         }
         
-        public async Task<TResult> OpenAsync<T, TResult>(CancellationToken cancellationToken, StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0) 
+        public async Task<TResult> OpenAsync<T, TResult>(CancellationToken cancellationToken, int layer = 0, StateOptions options = StateOptions.CloseAndRemove) 
             where T : IResultState<TResult>
         {
             T state = statesList.OfType<T>().First();
-            Prepare(state, options, layer);
+            Prepare(state, layer, options);
             TResult result = await state.OpenAsync(cancellationToken);
             return result;
         }
         
-        public async Task<TResult> OpenAsync<T, TPayload, TResult>(TPayload payload, CancellationToken cancellationToken, StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0) 
+        public async Task<TResult> OpenAsync<T, TPayload, TResult>(TPayload payload, CancellationToken cancellationToken, int layer = 0, StateOptions options = StateOptions.CloseAndRemove) 
             where T : IResultState<TPayload, TResult>
         {
             T state = statesList.OfType<T>().First();
             state.Payload = payload;
-            Prepare(state, options, layer);
+            Prepare(state, layer, options);
             TResult result = await state.OpenAsync(cancellationToken);
             return result;
         }
 
-        private void Prepare(IState item, StateOptions options = StateOptions.ClosePreviousAndAddToStack, int layer = 0)
+        private void Prepare(IState item, int layer = 0, StateOptions options = StateOptions.CloseAndRemove)
         {
             StateNode node = baseNode;
-            
-            for (int i = 0; i <= layer; i++)
+
+            for (int i = 0; i < layer - 1; i++)
             {
-                StateNode childNode;
                 if (node.nodes.Count > 0)
                 {
-                    childNode = node.nodes.Last();
-                    childNode.state.Close();
+                    node = node.nodes.Last();
+                }
+            }
+
+            if (node.nodes.Count > 0)
+            {
+                if (options.HasFlag(StateOptions.Close))
+                {
+                    node.nodes.Last().Close();
                 }
                 
-                childNode = new StateNode(item);
-                node.nodes.AddLast(childNode);
-                node = childNode;
+                if (options.HasFlag(StateOptions.Remove))
+                {
+                    node.nodes.RemoveLast();
+                }
             }
+         
+            node.nodes.AddLast(new StateNode(item));
         }
 
         public void OpenLast(int layer = 0)
