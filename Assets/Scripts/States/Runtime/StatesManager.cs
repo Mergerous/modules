@@ -130,7 +130,7 @@ namespace Modules.States
         {
             StateNode node = baseNode;
             
-            for (int i = 0; i < layer; i++)
+            for (int i = 0; i <= layer; i++)
             {
                 StateNode childNode;
                 if (node.nodes.Count > 0)
@@ -149,7 +149,7 @@ namespace Modules.States
         {
             StateNode node = baseNode;
 
-            for (int i = 0; i < layer; i++)
+            for (int i = 0; i <= layer; i++)
             {
                 if (node.nodes.Count > 0)
                 {
@@ -164,7 +164,7 @@ namespace Modules.States
         {
             StateNode node = baseNode;
             
-            for (int i = 0; i < layer; i++)
+            for (int i = 0; i <= layer; i++)
             {
                 if (node.nodes.Count > 0)
                 {
