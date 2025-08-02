@@ -45,7 +45,7 @@ namespace Modules.States
         public bool TryGetLayer<T>(int startLayer, out int layer)
             where T : IState
         {
-            if (state.GetType() == typeof(T))
+            if (state?.GetType() == typeof(T))
             {
                 layer = startLayer - 1;
                 return true;
