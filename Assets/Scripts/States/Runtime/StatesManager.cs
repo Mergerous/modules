@@ -7,66 +7,15 @@ using JetBrains.Annotations;
 
 namespace Modules.States
 {
-    public sealed class StateNode
-    {
-        public IState state;
-        public LinkedList<StateNode> nodes = new();
-
-        public StateNode(IState state)
-        {
-            this.state = state;
-        }
-
-        public void Open()
-        {
-            state.Open();
-            foreach (StateNode childNode in nodes)
-            {
-                childNode.Open();
-            }
-        }
-
-        public void Close()
-        {
-            state?.Close();
-            foreach (StateNode childNode in nodes)
-            {
-                childNode.Close();
-            }
-        }
-
-        public void Remove(StateNode node)
-        {
-            if (!nodes.Remove(node))
-            {
-                foreach (StateNode childNode in nodes)
-                {
-                    childNode.Remove(node);
-                }
-            }
-        }
-    }
-    
     [UsedImplicitly]
     public sealed class StatesManager
     {
         private StateNode baseNode = new(default);
-        private Dictionary<int, StateMachine> machines = new();
         private IEnumerable<IState> statesList;
         
         public void Initialize(IEnumerable<IState> states)
         {
             statesList = states;
-        }
-
-        public StateMachine GetMachine(int index)
-        {
-            if (!machines.TryGetValue(index, out StateMachine machine))
-            {
-                machines.Add(index, machine = new StateMachine());
-            }
-
-            return machine;
         }
 
         public void Open<T>(int layer = 0, StateOptions options = StateOptions.CloseAndRemove)
@@ -183,6 +132,14 @@ namespace Modules.States
             
             node.Close();
             baseNode.Remove(node);
+        }
+
+        public void OpenPrevious<T>() where T : IState
+        {
+            if (baseNode.TryGetLayer<T>(0, out int layer))
+            {
+                OpenPrevious(layer);
+            }
         }
 
         public void OpenPrevious(int layer = 0)
