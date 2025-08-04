@@ -113,7 +113,7 @@ namespace Modules.States
                 if (node.nodes.Count > 0)
                 {
                     node = node.nodes.Last();
-                    hasLayer = i == layer + 1;
+                    hasLayer = i + 1 == layer + 1;
                 }
             }
             
@@ -133,7 +133,7 @@ namespace Modules.States
                 if (node.nodes.Count > 0)
                 {
                     node = node.nodes.Last();
-                    hasLayer = i == layer + 1;
+                    hasLayer = i + 1 == layer;
                 }
             }
 
