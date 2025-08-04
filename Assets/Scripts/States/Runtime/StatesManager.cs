@@ -106,32 +106,42 @@ namespace Modules.States
         public void OpenLast(int layer = 0)
         {
             StateNode node = baseNode;
+            bool hasLayer = false;
 
             for (int i = 0; i <= layer; i++)
             {
                 if (node.nodes.Count > 0)
                 {
                     node = node.nodes.Last();
+                    hasLayer = i == layer;
                 }
             }
             
-            node?.Open();
+            if (hasLayer)
+            {
+                node.Open();
+            }
         }
 
         public void CloseLast(int layer = 0)
         {
             StateNode node = baseNode;
+            bool hasLayer = false;
             
             for (int i = 0; i <= layer; i++)
             {
                 if (node.nodes.Count > 0)
                 {
                     node = node.nodes.Last();
+                    hasLayer = i == layer;
                 }
             }
-            
-            node.Close();
-            baseNode.Remove(node);
+
+            if (hasLayer)
+            {
+                node.Close();
+                baseNode.Remove(node);
+            }
         }
 
         public void OpenPrevious<T>() where T : IState
