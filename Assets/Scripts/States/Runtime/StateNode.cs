@@ -47,7 +47,7 @@ namespace Modules.States
         {
             if (state?.GetType() == typeof(T))
             {
-                layer = startLayer - 1;
+                layer = startLayer;
                 return true;
             }
 
