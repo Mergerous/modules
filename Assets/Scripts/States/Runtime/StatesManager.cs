@@ -115,7 +115,7 @@ namespace Modules.States
                 }
             }
             
-            node.Open();
+            node?.Open();
         }
 
         public void CloseLast(int layer = 0)
