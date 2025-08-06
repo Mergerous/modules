@@ -5,17 +5,21 @@ namespace Modules.States
 {
     public sealed class StateNode
     {
-        public IState state;
-        public LinkedList<StateNode> nodes = new();
+        public readonly List<IState> states;
+        public readonly LinkedList<StateNode> nodes = new();
 
-        public StateNode(IState state)
+        public StateNode(params IState[] states)
         {
-            this.state = state;
+            this.states = new List<IState>(states);
         }
 
         public void Open()
         {
-            state.Open();
+            foreach (var state in states)
+            {
+                state.Open();
+            }
+            
             foreach (StateNode childNode in nodes)
             {
                 childNode.Open();
@@ -24,7 +28,11 @@ namespace Modules.States
 
         public void Close()
         {
-            state?.Close();
+            foreach (var state in states)
+            {
+                state.Close();
+            }
+            
             foreach (StateNode childNode in nodes)
             {
                 childNode.Close();
@@ -45,7 +53,7 @@ namespace Modules.States
         public bool TryGetLayer<T>(int startLayer, out int layer)
             where T : IState
         {
-            if (state?.GetType() == typeof(T))
+            if (states.OfType<T>().Any())
             {
                 layer = startLayer;
                 return true;

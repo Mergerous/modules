@@ -99,8 +99,15 @@ namespace Modules.States
                     node.nodes.RemoveLast();
                 }
             }
-         
-            node.nodes.AddLast(new StateNode(item));
+
+            if (options.HasFlag(StateOptions.Join))
+            {
+                node.states.Add(item);
+            }
+            else
+            {
+                node.nodes.AddLast(new StateNode(item));  
+            }
         }
 
         public void OpenLast(int layer = 0)
