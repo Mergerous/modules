@@ -10,7 +10,14 @@ namespace Modules.States
 
         public StateNode(params IState[] states)
         {
-            this.states = new List<IState>(states);
+            if (states != null)
+            {
+                this.states = new List<IState>(states);
+            }
+            else
+            {
+                this.states = new();
+            }
         }
 
         public void Open()
