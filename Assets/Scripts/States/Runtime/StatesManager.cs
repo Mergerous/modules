@@ -89,9 +89,12 @@ namespace Modules.States
                     node.nodes.RemoveLast();
                 }
                 
-                if (options.HasFlag(StateOptions.Join) && node.nodes.Count > 0)
+                if (options.HasFlag(StateOptions.Join))
                 {
-                    node.nodes.Last().states.Add(item);
+                    if (node.nodes.Count > 0)
+                    {
+                        node.nodes.Last().states.Add(item);
+                    }
                 }
                 else
                 {
