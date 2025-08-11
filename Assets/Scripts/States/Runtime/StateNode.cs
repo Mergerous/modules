@@ -57,6 +57,22 @@ namespace Modules.States
             }
         }
 
+        public bool TryGetLast(int layer, out StateNode node)
+        {
+            if (layer == 0)
+            {
+                node = this;
+                return true;
+            }
+            if (nodes.Count > 0)
+            {
+                return nodes.Last.Value.TryGetLast(layer - 1, out node);
+            }
+
+            node = default;
+            return false;
+        }
+
         public bool TryGetLayer<T>(int startLayer, out int layer)
             where T : IState
         {

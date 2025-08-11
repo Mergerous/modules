@@ -77,37 +77,21 @@ namespace Modules.States
 
         private void Prepare(IState item, int layer = 0, StateOptions options = StateOptions.CloseAndRemove)
         {
-            StateNode node = baseNode;
-            bool hasLayer = false;
-
-            for (int i = 0; i <= layer; i++)
+            if (baseNode.TryGetLast(layer, out StateNode node))
             {
-                if (node.nodes.Count > 0)
-                {
-                    node = node.nodes.Last();
-                    if (i + 1 == layer)
-                    {
-                        hasLayer = true;
-                        break;
-                    }
-                }
-            }
-
-            if (hasLayer)
-            {
-                if (options.HasFlag(StateOptions.Close))
+                if (options.HasFlag(StateOptions.Close) && node.nodes.Count > 0)
                 {
                     node.nodes.Last().Close();
                 }
                 
-                if (options.HasFlag(StateOptions.Remove))
+                if (options.HasFlag(StateOptions.Remove) && node.nodes.Count > 0)
                 {
                     node.nodes.RemoveLast();
                 }
                 
-                if (options.HasFlag(StateOptions.Join))
+                if (options.HasFlag(StateOptions.Join) && node.nodes.Count > 0)
                 {
-                    node.states.Add(item);
+                    node.nodes.Last().states.Add(item);
                 }
                 else
                 {
@@ -118,23 +102,7 @@ namespace Modules.States
 
         public void OpenLast(int layer = 0)
         {
-            StateNode node = baseNode;
-            bool hasLayer = false;
-
-            for (int i = 0; i <= layer; i++)
-            {
-                if (node.nodes.Count > 0)
-                {
-                    node = node.nodes.Last();
-                    if (i + 1 == layer)
-                    {
-                        hasLayer = true;
-                        break;
-                    }
-                }
-            }
-            
-            if (hasLayer)
+            if (baseNode.TryGetLast(layer, out StateNode node))
             {
                 node.Open();
             }
@@ -142,23 +110,7 @@ namespace Modules.States
 
         public void CloseLast(int layer = 0)
         {
-            StateNode node = baseNode;
-            bool hasLayer = false;
-            
-            for (int i = 0; i <= layer; i++)
-            {
-                if (node.nodes.Count > 0)
-                {
-                    node = node.nodes.Last();
-                    if (i + 1 == layer)
-                    {
-                        hasLayer = true;
-                        break;
-                    }
-                }
-            }
-
-            if (hasLayer)
+            if (baseNode.TryGetLast(layer, out StateNode node))
             {
                 node.Close();
                 baseNode.Remove(node);
