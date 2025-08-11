@@ -108,7 +108,7 @@ namespace Modules.States
             if (baseNode.TryFindNode<T>(out LinkedListNode<StateNode> node))
             {
                 node.Value.Close();
-                baseNode.Remove(node.Value);
+                node.List.Remove(node);
                 node.Previous?.Value.Open();
             }
         }
