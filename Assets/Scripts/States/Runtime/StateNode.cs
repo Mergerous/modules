@@ -46,6 +46,28 @@ namespace Modules.States
             }
         }
 
+        public bool TryFindNode<T>(out LinkedListNode<StateNode> node) where T : IState
+        {
+            foreach (StateNode child in nodes)
+            {
+                T result = child.states.OfType<T>().FirstOrDefault();
+                
+                if (result != null)
+                {
+                    node = nodes.Find(child);
+                    return true;
+                }
+                
+                if(child.TryFindNode<T>(out node))
+                {
+                    return true;
+                }
+            }
+
+            node = default;
+            return false;
+        }
+
         public void Remove(StateNode node)
         {
             if (!nodes.Remove(node))
@@ -70,27 +92,6 @@ namespace Modules.States
             }
 
             node = default;
-            return false;
-        }
-
-        public bool TryGetLayer<T>(int startLayer, out int layer)
-            where T : IState
-        {
-            if (states.OfType<T>().Any())
-            {
-                layer = startLayer;
-                return true;
-            }
-
-            foreach (StateNode node in nodes)
-            {
-                if (node.TryGetLayer<T>(startLayer + 1, out layer))
-                {
-                    return true;
-                }
-            }
-            
-            layer = startLayer;
             return false;
         }
     }

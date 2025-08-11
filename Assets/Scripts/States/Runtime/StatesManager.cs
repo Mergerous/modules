@@ -102,7 +102,25 @@ namespace Modules.States
                 }
             }
         }
+        
+        public void OpenPrevious<T>() where T : IState
+        {
+            if (baseNode.TryFindNode<T>(out LinkedListNode<StateNode> node))
+            {
+                node.Value.Close();
+                baseNode.Remove(node.Value);
+                node.Previous?.Value.Open();
+            }
+        }
 
+        [Obsolete]
+        public void OpenPrevious(int layer = 0)
+        {
+            CloseLast(layer);
+            OpenLast(layer);
+        }
+        
+        [Obsolete]
         public void OpenLast(int layer = 0)
         {
             if (baseNode.TryGetLast(layer, out StateNode node))
@@ -110,7 +128,8 @@ namespace Modules.States
                 node.Open();
             }
         }
-
+        
+        [Obsolete]
         public void CloseLast(int layer = 0)
         {
             if (baseNode.TryGetLast(layer, out StateNode node))
@@ -118,20 +137,6 @@ namespace Modules.States
                 node.Close();
                 baseNode.Remove(node);
             }
-        }
-
-        public void OpenPrevious<T>() where T : IState
-        {
-            if (baseNode.TryGetLayer<T>(0, out int layer))
-            {
-                OpenPrevious(layer);
-            }
-        }
-
-        public void OpenPrevious(int layer = 0)
-        {
-            CloseLast(layer);
-            OpenLast(layer);
         }
     }
 }
