@@ -6,15 +6,17 @@ namespace Modules.Ads
 {
     public class AdsManager : IDisposable
     {
-        private readonly AdsSettings _adsSettings;
+        private readonly AdsSettings adsSettings;
+
+        public bool IsInitialized => Appodeal.IsInitialized((int)adsSettings.AdType);
         
         public AdsManager(AdsSettings adsSettings)
         {
-            _adsSettings = adsSettings;
-            Appodeal.SetLogLevel(_adsSettings.LogLevel);
-            Appodeal.SetTesting(_adsSettings.Testing);
-            Appodeal.MuteVideosIfCallsMuted(_adsSettings.MuteVideosIfCallsMuted);
-            Appodeal.Initialize(_adsSettings.AppKey, (int)adsSettings.AdType);
+            this.adsSettings = adsSettings;
+            Appodeal.SetLogLevel(this.adsSettings.LogLevel);
+            Appodeal.SetTesting(this.adsSettings.Testing);
+            Appodeal.MuteVideosIfCallsMuted(this.adsSettings.MuteVideosIfCallsMuted);
+            Appodeal.Initialize(this.adsSettings.AppKey, (int)adsSettings.AdType);
         }
 
         ~AdsManager()
