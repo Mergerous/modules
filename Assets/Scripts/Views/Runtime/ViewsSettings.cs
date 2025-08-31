@@ -12,5 +12,10 @@ namespace Modules.Views
 
         public IReadOnlyDictionary<string, View> ViewPrefabs
             => viewPrefabsCache ??= viewPrefabs.ToDictionary(view => view.Key, view => view);
+
+        public View[] ViewPrefabsArray
+        {
+            set => viewPrefabs = value;
+        }
     }
 }
