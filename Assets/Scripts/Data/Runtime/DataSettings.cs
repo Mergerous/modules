@@ -6,7 +6,7 @@ namespace Modules.Data
     public class DataSettings : ScriptableObject
     {
         [field: SerializeField] public JsonType JsonType { get; private set; } = JsonType.Unity;
-        [field: SerializeField] public bool ConvertToByteCode { get; private set; } = true;
+        [field: SerializeField] public EncodingType EncodingType { get; private set; } = EncodingType.UTF8;
         [field: SerializeField] public bool LogSaveEvent { get; private set; } = true;
     }
 }

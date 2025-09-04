@@ -1,12 +1,13 @@
 using System;
 using System.Text;
+using Data.Runtime;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Modules.Data
 {
-    [UsedImplicitly]
+    [UsedImplicitly, Obsolete("Use " + nameof(IDataService) + " instead")]
     public sealed class DataManager
     {
         private readonly DataSettings dataSettings;
@@ -30,7 +31,7 @@ namespace Modules.Data
                     break;
             }
           
-            if (dataSettings.ConvertToByteCode)
+            if (dataSettings.EncodingType == EncodingType.UTF8)
             {
                 byte[] bytes = Encoding.Unicode.GetBytes(json);
                 PlayerPrefs.SetString(key, Convert.ToBase64String(bytes));
@@ -72,7 +73,7 @@ namespace Modules.Data
             if (PlayerPrefs.HasKey(key))
             {
                 string json;
-                if (dataSettings.ConvertToByteCode)
+                if (dataSettings.EncodingType == EncodingType.UTF8)
                 {
                     try
                     {

@@ -1,4 +1,5 @@
 using System;
+using Data.Runtime;
 using JetBrains.Annotations;
 using Modules.Data;
 using Times;
@@ -9,12 +10,12 @@ namespace Modules.Times
     [UsedImplicitly]
     public sealed class TimeManager : ITickable, ITimeProcessor
     {
-        private readonly DataManager dataManager;
+        private readonly IDataService dataService;
         private readonly TimeModel timeModel;
 
-        public TimeManager(DataManager dataManager, TimeModel timeModel)
+        public TimeManager(IDataService dataService, TimeModel timeModel)
         {
-            this.dataManager = dataManager;
+            this.dataService = dataService;
             this.timeModel = timeModel;
         }
 
@@ -29,13 +30,13 @@ namespace Modules.Times
         public void AddShift(TimeSpan shift)
         {
             timeModel.Shift += shift.TotalSeconds;
-            dataManager.Save(TimeConstants.TIME_DATA_SAVE_KEY, timeModel.Data);
+            dataService.Save(TimeConstants.TIME_DATA_SAVE_KEY, timeModel.Data);
         }
         
         public void RemoveShift(TimeSpan shift)
         {
             timeModel.Shift -= shift.TotalSeconds;
-            dataManager.Save(TimeConstants.TIME_DATA_SAVE_KEY, timeModel.Data);
+            dataService.Save(TimeConstants.TIME_DATA_SAVE_KEY, timeModel.Data);
         }
 
         public void AddTimer(ITimer timer)
