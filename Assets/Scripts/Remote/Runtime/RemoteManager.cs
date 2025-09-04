@@ -16,20 +16,10 @@ namespace Modules.Remote
         private readonly RemoteSettings remoteSettings;
         // private readonly FirebaseRemoteConfig remoteConfig;
 
-        public RemoteManager(JsonLibrary jsonLibrary, RemoteSettings remoteSettings, params IRemoteHandler[] remotables)
+        public RemoteManager(JsonLibrary jsonLibrary, RemoteSettings remoteSettings)
         {
             this.remoteSettings = remoteSettings;
             this.jsonLibrary = jsonLibrary;
-            // remoteConfig = FirebaseRemoteConfig.DefaultInstance;
-
-            foreach (IRemoteHandler remotable in remotables)
-            {
-                GetFromRemoteAttribute attribute = remotable.GetType().GetCustomAttribute<GetFromRemoteAttribute>();
-                if (attribute != null && TryFetch(attribute.Type, out object remote))
-                {
-                    remotable.OnFetched(new RemoteInfoHandle(remote));
-                }
-            }
         }
 
         public async Task LoadAsync()
