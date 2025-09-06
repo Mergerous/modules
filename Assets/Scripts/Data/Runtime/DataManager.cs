@@ -21,7 +21,7 @@ namespace Modules.Data
         {
             string json = default;
 
-            switch (dataSettings.JsonType)
+            switch (dataSettings.SerializationSettings.jsonType)
             {
                 case JsonType.Newtonsoft:
                     json = JsonConvert.SerializeObject(data);
@@ -31,16 +31,11 @@ namespace Modules.Data
                     break;
             }
           
-            if (dataSettings.EncodingType == EncodingType.UTF8)
+            if (dataSettings.SerializationSettings.encodingType == EncodingType.UTF8)
             {
                 byte[] bytes = Encoding.Unicode.GetBytes(json);
                 PlayerPrefs.SetString(key, Convert.ToBase64String(bytes));
                 return;
-            }
-
-            if (dataSettings.LogSaveEvent)
-            {
-                Debug.Log($"SAVE {json}");
             }
 
             PlayerPrefs.SetString(key, json);
@@ -73,7 +68,7 @@ namespace Modules.Data
             if (PlayerPrefs.HasKey(key))
             {
                 string json;
-                if (dataSettings.EncodingType == EncodingType.UTF8)
+                if (dataSettings.SerializationSettings.encodingType == EncodingType.UTF8)
                 {
                     try
                     {
@@ -90,7 +85,7 @@ namespace Modules.Data
                     json = PlayerPrefs.GetString(key);
                 }
                 
-                switch (dataSettings.JsonType)
+                switch (dataSettings.SerializationSettings.jsonType)
                 {
                     case JsonType.Newtonsoft:
                         data = JsonConvert.DeserializeObject(json, type);
@@ -100,10 +95,6 @@ namespace Modules.Data
                         break;
                 }
                 
-                if (dataSettings.LogSaveEvent)
-                {
-                    Debug.Log(json);
-                }
                 return true;
             }
 

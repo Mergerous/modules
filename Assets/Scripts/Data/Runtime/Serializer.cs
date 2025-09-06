@@ -7,16 +7,19 @@ namespace Modules.Data
 {
     public static class Serializer
     {
-        public static string Serialize(object data, JsonType jsonType, EncodingType encodingType)
+        public static string Serialize(object data, SerializationSettings serializationSettings)
         {
-            string json = jsonType switch 
+            string json = serializationSettings.jsonType switch 
             {
-                JsonType.Newtonsoft => JsonConvert.SerializeObject(data),
+                JsonType.Newtonsoft => JsonConvert.SerializeObject(data, serializationSettings.formatting, new JsonSerializerSettings()
+                {
+                    TypeNameHandling = serializationSettings.typeNameHandling
+                }),
                 JsonType.Unity => JsonUtility.ToJson(data),
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            return encodingType switch
+            return serializationSettings.encodingType switch
             {
                 EncodingType.Unicode => Convert.ToBase64String(Encoding.Unicode.GetBytes(json)),
                 EncodingType.UTF8 => Convert.ToBase64String(Encoding.UTF8.GetBytes(json)),
@@ -24,18 +27,22 @@ namespace Modules.Data
             };
         }
         
-        public static T Deserialize<T>(string json, JsonType jsonType, EncodingType encodingType)
+        public static T Deserialize<T>(string json, SerializationSettings serializationSettings)
         {
-            json = encodingType switch 
+            json = serializationSettings.encodingType switch 
             {
                 EncodingType.Unicode => Encoding.Unicode.GetString(Convert.FromBase64String(json)),
                 EncodingType.UTF8 => Encoding.UTF8.GetString(Convert.FromBase64String(json)),
                 _ => json
             };
             
-            return jsonType switch 
+            return serializationSettings.jsonType switch 
             {
-                JsonType.Newtonsoft => (T)JsonConvert.DeserializeObject(json, typeof(T)),
+                JsonType.Newtonsoft => (T)JsonConvert.DeserializeObject(json, typeof(T), new JsonSerializerSettings()
+                {
+                    TypeNameHandling = serializationSettings.typeNameHandling,
+                    Formatting = serializationSettings.formatting
+                }),
                 JsonType.Unity => (T)JsonUtility.FromJson(json, typeof(T)),
                 _ => throw new ArgumentOutOfRangeException()
             };

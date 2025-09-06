@@ -1,29 +1,20 @@
 using UnityEditor;
-using UnityEngine;
 
-[InitializeOnLoad]
-internal static class PlayModePostProcessor
+namespace Modules.Common
 {
-    static PlayModePostProcessor()
+    [InitializeOnLoad]
+    internal static class PlayModePostProcessor
     {
-        EditorSettings.enterPlayModeOptionsEnabled = true;
-        EditorSettings.enterPlayModeOptions = EnterPlayModeOptions.DisableDomainReload;
-        EditorApplication.update += OnEditorUpdate;
-    }
+        static PlayModePostProcessor()
+        {
+            EditorSettings.enterPlayModeOptionsEnabled = true;
+            EditorSettings.enterPlayModeOptions = EnterPlayModeOptions.DisableDomainReload;
+        }
 
-    [MenuItem("Modules/Reload Domain")]
-    static void ReloadDomain()
-    {
-        EditorUtility.RequestScriptReload();
-    }
-    
-    // TODO REMOVE COMPLETELY
-    private static void OnEditorUpdate () 
-    {
-        // if (EditorApplication.isPlaying && EditorApplication.isCompiling) 
-        // {
-        //     Debug.Log ("Exiting play mode due to script compilation.");
-        //     EditorApplication.isPlaying = false;
-        // }
+        [MenuItem("Modules/Reload Domain")]
+        static void ReloadDomain()
+        {
+            EditorUtility.RequestScriptReload();
+        }
     }
 }

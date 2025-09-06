@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Modules.Common
 {
-    public class PasswordFieldAttribute : PropertyAttribute
+    public sealed class PasswordFieldAttribute : PropertyAttribute
     {
     
     }

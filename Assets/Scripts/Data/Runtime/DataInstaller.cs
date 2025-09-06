@@ -13,9 +13,18 @@ namespace Modules.Data
         
         public void Install(IContainerBuilder builder)
         {
-            builder.Register<DataManager>(Lifetime.Singleton).WithParameter(dataSettings);
-            builder.Register<IDataService, PlayerPrefsDataManager>(Lifetime.Singleton).WithParameter(dataSettings);
-            builder.Register<IDataService, PersistentDataManager>(Lifetime.Singleton).WithParameter(dataSettings);
+            switch (dataSettings.DataType)
+            {
+                case DataType.PersistentData:
+                    builder.Register<IDataService, PlayerPrefsDataManager>(Lifetime.Singleton).WithParameter(dataSettings);
+                    break;
+                case DataType.PlayerPrefs:
+                    builder.Register<IDataService, PersistentDataManager>(Lifetime.Singleton).WithParameter(dataSettings);
+                    break;
+                default:
+                    builder.Register<DataManager>(Lifetime.Singleton).WithParameter(dataSettings);
+                    break;
+            }
         }
     }
 }

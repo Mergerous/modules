@@ -16,7 +16,7 @@ namespace Modules.Data
 
         public void Save(string key, object data)
         {
-            string json = Serializer.Serialize(data, dataSettings.JsonType, dataSettings.EncodingType);
+            string json = Serializer.Serialize(data, dataSettings.SerializationSettings);
             PlayerPrefs.SetString(key, json);
         }
 
@@ -28,7 +28,7 @@ namespace Modules.Data
             }
 
             string json = PlayerPrefs.GetString(key);
-            return Serializer.Deserialize<T>(json, dataSettings.JsonType, dataSettings.EncodingType);
+            return Serializer.Deserialize<T>(json, dataSettings.SerializationSettings);
         }
     }
 }
