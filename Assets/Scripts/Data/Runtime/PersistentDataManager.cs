@@ -19,7 +19,7 @@ namespace Data.Runtime
 
         public async void SaveAsync(string key, object data, CancellationToken cancellationToken)
         {
-            string json = Serializer.Serialize(data, dataSettings.JsonType, dataSettings.EncodingType);
+            string json = Serializer.Serialize(data, dataSettings.SerializationSettings);
             await File.WriteAllTextAsync(Application.persistentDataPath, json, cancellationToken);
         }
 
@@ -31,7 +31,7 @@ namespace Data.Runtime
             }
             
             string json = await File.ReadAllTextAsync(Application.persistentDataPath, cancellationToken);
-            return Serializer.Deserialize<T>(json, dataSettings.JsonType, dataSettings.EncodingType);
+            return Serializer.Deserialize<T>(json, dataSettings.SerializationSettings);
         }
     }
 }
