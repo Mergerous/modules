@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace Modules.Data
 {
     [Serializable]
-    public sealed class SerializationSettings
+    public struct SerializationSettings
     {
         public JsonType jsonType;
         public EncodingType encodingType;

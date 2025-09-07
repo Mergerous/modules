@@ -1,3 +1,4 @@
+using System.Linq;
 using Data.Runtime;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -14,17 +15,18 @@ namespace Modules.Data
             this.dataSettings = dataSettings;
         }
 
-        public void Save(string key, object data)
+        void IDataService.Save(string key, object data)
         {
             string json = Serializer.Serialize(data, dataSettings.SerializationSettings);
             PlayerPrefs.SetString(key, json);
         }
 
-        public T LoadOrFallback<T>(string key, T fallback)
+        T IDataService.LoadOrDefault<T>(string key)
         {
             if (!PlayerPrefs.HasKey(key))
             {
-                return fallback;
+                object[] dump = Serializer.Deserialize<object[]>(dataSettings.DefaultDumpAsset.text, dataSettings.SerializationSettings);
+                return dump.OfType<T>().FirstOrDefault();
             }
 
             string json = PlayerPrefs.GetString(key);

@@ -1,4 +1,5 @@
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -17,20 +18,25 @@ namespace Data.Runtime
             this.dataSettings = dataSettings;
         }
 
-        public async void SaveAsync(string key, object data, CancellationToken cancellationToken)
+        async void IDataService.SaveAsync(string key, object data, CancellationToken cancellationToken)
         {
             string json = Serializer.Serialize(data, dataSettings.SerializationSettings);
-            await File.WriteAllTextAsync(Application.persistentDataPath, json, cancellationToken);
+            string path = Path.Combine(Application.persistentDataPath, key);
+            await File.WriteAllTextAsync(path, json, cancellationToken);
         }
 
-        public async Task<T> LoadOrFallbackAsync<T>(string key, T fallback, CancellationToken cancellationToken)
+        // TODO ADD Handle
+        async Task<T> IDataService.LoadOrDefaultAsync<T>(string key, CancellationToken cancellationToken)
         {
-            if (!PlayerPrefs.HasKey(key))
+            string path = Path.Combine(Application.persistentDataPath, key);
+            
+            if (!File.Exists(path))
             {
-                return fallback;
+                object[] dump = Serializer.Deserialize<object[]>(dataSettings.DefaultDumpAsset.text, dataSettings.SerializationSettings);
+                return dump.OfType<T>().FirstOrDefault();
             }
             
-            string json = await File.ReadAllTextAsync(Application.persistentDataPath, cancellationToken);
+            string json = await File.ReadAllTextAsync(path, cancellationToken);
             return Serializer.Deserialize<T>(json, dataSettings.SerializationSettings);
         }
     }

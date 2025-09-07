@@ -16,12 +16,12 @@ namespace Data.Runtime
             throw new NotImplementedException();
         }
 
-        T LoadOrFallback<T>(string key, T fallback)
+        T LoadOrDefault<T>(string key)
         {
             throw new NotImplementedException();
         }
 
-        Task<T> LoadOrFallbackAsync<T>(string key, T fallback, CancellationToken cancellationToken)
+        Task<T> LoadOrDefaultAsync<T>(string key, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }
