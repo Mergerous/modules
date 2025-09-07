@@ -25,8 +25,7 @@ namespace Modules.Data
         {
             if (!PlayerPrefs.HasKey(key))
             {
-                object[] dump = Serializer.Deserialize<object[]>(dataSettings.DefaultDumpAsset.text, dataSettings.SerializationSettings);
-                return dump.OfType<T>().FirstOrDefault();
+                return dataSettings.DefaultDumpAsset.GetDataOrDefault<T>();
             }
 
             string json = PlayerPrefs.GetString(key);

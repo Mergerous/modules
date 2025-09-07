@@ -32,8 +32,7 @@ namespace Data.Runtime
             
             if (!File.Exists(path))
             {
-                object[] dump = Serializer.Deserialize<object[]>(dataSettings.DefaultDumpAsset.text, dataSettings.SerializationSettings);
-                return dump.OfType<T>().FirstOrDefault();
+                return dataSettings.DefaultDumpAsset.GetDataOrDefault<T>();
             }
             
             string json = await File.ReadAllTextAsync(path, cancellationToken);

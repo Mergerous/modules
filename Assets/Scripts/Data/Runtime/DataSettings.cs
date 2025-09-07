@@ -7,7 +7,7 @@ namespace Modules.Data
     public class DataSettings : ScriptableObject
     {
         [field: SerializeField] public DataType DataType { get; private set; }
-        [field: SerializeField] public TextAsset DefaultDumpAsset { get; private set; }
+        [field: SerializeField] public DumpAsset DefaultDumpAsset { get; private set; }
         [field: SerializeField] public SerializationSettings SerializationSettings { get; private set; } = new()
         {
             encodingType = EncodingType.Unicode,
