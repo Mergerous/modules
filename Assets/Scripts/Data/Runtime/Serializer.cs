@@ -29,6 +29,11 @@ namespace Modules.Data
         
         public static T Deserialize<T>(string json, SerializationSettings serializationSettings)
         {
+            return (T)Deserialize(json, typeof(T), serializationSettings);
+        }
+        
+        public static object Deserialize(string json, Type type, SerializationSettings serializationSettings)
+        {
             json = serializationSettings.encodingType switch 
             {
                 EncodingType.Unicode => Encoding.Unicode.GetString(Convert.FromBase64String(json)),
@@ -38,12 +43,12 @@ namespace Modules.Data
             
             return serializationSettings.jsonType switch 
             {
-                JsonType.Newtonsoft => (T)JsonConvert.DeserializeObject(json, typeof(T), new JsonSerializerSettings()
+                JsonType.Newtonsoft => JsonConvert.DeserializeObject(json, type, new JsonSerializerSettings()
                 {
                     TypeNameHandling = serializationSettings.typeNameHandling,
                     Formatting = serializationSettings.formatting
                 }),
-                JsonType.Unity => (T)JsonUtility.FromJson(json, typeof(T)),
+                JsonType.Unity => JsonUtility.FromJson(json, type),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
