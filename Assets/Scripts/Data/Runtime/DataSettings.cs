@@ -1,10 +1,11 @@
 using Newtonsoft.Json;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Modules.Data
 {
     [CreateAssetMenu(menuName = "Settings/" + nameof(DataSettings), fileName = nameof(DataSettings))]
-    public class DataSettings : ScriptableObject
+    public class DataSettings : SerializedScriptableObject
     {
         [field: SerializeField] public DataType DataType { get; private set; }
         [field: SerializeField] public IDump DefaultDump { get; private set; }
