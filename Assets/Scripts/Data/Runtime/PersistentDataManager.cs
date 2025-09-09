@@ -32,7 +32,7 @@ namespace Data.Runtime
             
             if (!File.Exists(path))
             {
-                return dataSettings.DefaultDumpAsset.GetDataOrDefault<T>();
+                return dataSettings.DefaultDump.GetDataOrDefault<T>();
             }
             
             string json = await File.ReadAllTextAsync(path, cancellationToken);

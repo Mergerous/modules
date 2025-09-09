@@ -25,7 +25,7 @@ namespace Modules.Data
         {
             if (!PlayerPrefs.HasKey(key))
             {
-                return dataSettings.DefaultDumpAsset.GetDataOrDefault<T>();
+                return dataSettings.DefaultDump.GetDataOrDefault<T>();
             }
 
             string json = PlayerPrefs.GetString(key);
