@@ -16,10 +16,16 @@ namespace Modules.Data
             switch (dataSettings.DataType)
             {
                 case DataType.PersistentData:
-                    builder.Register<IDataService, PlayerPrefsDataManager>(Lifetime.Singleton).WithParameter(dataSettings);
+                    builder
+                        .Register<IDataService, PlayerPrefsDataManager>(Lifetime.Singleton)
+                        .Keyed(DataConstants.PLAYER_PREFS_KEY)
+                        .WithParameter(dataSettings);
                     break;
                 case DataType.PlayerPrefs:
-                    builder.Register<IDataService, PersistentDataManager>(Lifetime.Singleton).WithParameter(dataSettings);
+                    builder
+                        .Register<IDataService, PersistentDataManager>(Lifetime.Singleton)
+                        .Keyed(DataConstants.PERSISTENS_DATA_KEY)
+                        .WithParameter(dataSettings);
                     break;
                 default:
                     builder.Register<DataManager>(Lifetime.Singleton).WithParameter(dataSettings);

@@ -1,13 +1,13 @@
 {
   "dependencies": {
     "com.appodeal.mediation": {
-      "version": "https://github.com/appodeal/appodeal-unity-plugin-upm.git#v3.8.0",
+      "version": "https://github.com/appodeal/appodeal-unity-plugin-upm.git#v3.10.0",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.google.external-dependency-manager": "1.2.175"
       },
-      "hash": "fee1146384ffdf64ed0dc529acaf5e3368ab124f"
+      "hash": "200d157fc9b45d694ebf4d8fae14ecde769a58c4"
     },
     "com.github-glitchenzo.nugetforunity": {
       "version": "4.3.0",
@@ -337,11 +337,11 @@
       }
     },
     "jp.hadashikick.vcontainer": {
-      "version": "https://github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer#1.16.8",
+      "version": "https://github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer#1.17.0",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "5e6f5cc14b6dc8b94251bf6c0d6c37025a6ecf77"
+      "hash": "177dbda557fd652ce7f5d1647a3621653e094373"
     },
     "nuget-packages": {
       "version": "file:nuget-packages",

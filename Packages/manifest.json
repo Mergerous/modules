@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.appodeal.mediation": "https://github.com/appodeal/appodeal-unity-plugin-upm.git#v3.8.0",
+    "com.appodeal.mediation": "https://github.com/appodeal/appodeal-unity-plugin-upm.git#v3.10.0",
     "com.github-glitchenzo.nugetforunity": "4.3.0",
     "com.github.lofelt.nicevibrations": "4.1.203",
     "com.google.external-dependency-manager": "1.2.185",
@@ -17,7 +17,7 @@
     "com.unity.test-framework": "1.4.5",
     "com.unity.timeline": "1.8.7",
     "com.unity.ugui": "2.0.0",
-    "jp.hadashikick.vcontainer": "https://github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer#1.16.8",
+    "jp.hadashikick.vcontainer": "https://github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer#1.17.0",
     "com.unity.modules.accessibility": "1.0.0",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
