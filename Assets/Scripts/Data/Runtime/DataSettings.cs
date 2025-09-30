@@ -8,7 +8,6 @@ namespace Modules.Data
     public class DataSettings : SerializedScriptableObject
     {
         [field: SerializeField] public DataType DataType { get; private set; }
-        [field: SerializeField] public IDump DefaultDump { get; private set; }
         [field: SerializeField] public SerializationSettings SerializationSettings { get; private set; } = new()
         {
             encodingType = EncodingType.Unicode,
