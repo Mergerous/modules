@@ -1,4 +1,4 @@
-namespace Data.Runtime
+namespace Modules.Data
 {
     public static partial class DataConstants
     {
