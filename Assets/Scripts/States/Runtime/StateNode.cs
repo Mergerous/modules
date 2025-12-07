@@ -5,26 +5,45 @@ namespace Modules.States
 {
     public sealed class StateNode
     {
-        public readonly List<IState> states;
+        public struct StateInfo
+        {
+            public bool isAsync;
+            public IState state;
+
+            public StateInfo(bool isAsync, IState state)
+            {
+                this.isAsync = isAsync;
+                this.state = state;
+            }
+        }
+        
+        public readonly List<StateInfo> stateInfos;
         public readonly LinkedList<StateNode> nodes = new();
 
-        public StateNode(params IState[] states)
+        public StateNode(params StateInfo[] stateInfos)
         {
-            if (states != null)
+            if (stateInfos != null)
             {
-                this.states = new List<IState>(states);
+                this.stateInfos = new List<StateInfo>(stateInfos);
             }
             else
             {
-                this.states = new();
+                this.stateInfos = new();
             }
         }
 
         public void Open()
         {
-            foreach (var state in states)
+            foreach (var stateInfo in stateInfos)
             {
-                state.Open();
+                if (stateInfo.isAsync)
+                {
+                    state.OpenAsync();
+                }
+                else
+                {
+                    state.Open();
+                }
             }
             
             foreach (StateNode childNode in nodes)
@@ -35,9 +54,9 @@ namespace Modules.States
 
         public void Close()
         {
-            foreach (var state in states)
+            foreach (var stateInfo in stateInfos)
             {
-                state.Close();
+                stateInfo.state.Close();
             }
             
             foreach (StateNode childNode in nodes)
@@ -50,7 +69,7 @@ namespace Modules.States
         {
             foreach (StateNode child in nodes)
             {
-                T result = child.states.OfType<T>().FirstOrDefault();
+                T result = child.stateInfos.FirstOrDefault(info => info.state.GetType() == typeof(T));
                 
                 if (result != null)
                 {

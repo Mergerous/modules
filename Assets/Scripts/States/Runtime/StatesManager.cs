@@ -24,7 +24,7 @@ namespace Modules.States
         public void Open(Type type, int layer = 0, StateOptions options = StateOptions.CloseAndRemove)
         {
             IState state = statesList.First(state => state.GetType() == type);
-            Prepare(state, layer, options);
+            Prepare(state, false, layer, options);
             state.Open();
         }
         
@@ -33,7 +33,7 @@ namespace Modules.States
         {
             T state = statesList.OfType<T>().First();
             state.Payload = payload;
-            Prepare(state, layer, options);
+            Prepare(state, false, layer, options);
             state.Open();
         }
 
@@ -43,7 +43,7 @@ namespace Modules.States
         public async Task OpenAsync(Type type, CancellationToken cancellationToken, int layer = 0, StateOptions options = StateOptions.CloseAndRemove)
         {
             IState state = statesList.First(state => state.GetType() == type);
-            Prepare(state, layer, options);
+            Prepare(state, true, layer, options);
             await state.OpenAsync(cancellationToken);
         }
         
@@ -52,7 +52,7 @@ namespace Modules.States
         {
             T state = statesList.OfType<T>().First();
             state.Payload = payload;
-            Prepare(state, layer, options);
+            Prepare(state, true, layer, options);
             await state.OpenAsync(cancellationToken);
         }
         
@@ -60,7 +60,7 @@ namespace Modules.States
             where T : IResultState<TResult>
         {
             T state = statesList.OfType<T>().First();
-            Prepare(state, layer, options);
+            Prepare(state, true, layer, options);
             TResult result = await state.OpenAsync(cancellationToken);
             return result;
         }
@@ -75,7 +75,7 @@ namespace Modules.States
             return result;
         }
 
-        private void Prepare(IState item, int layer = 0, StateOptions options = StateOptions.CloseAndRemove)
+        private void Prepare(IState item, bool isAsync, int layer = 0, StateOptions options = StateOptions.CloseAndRemove)
         {
             if (baseNode.TryGetLast(layer, out StateNode node))
             {
@@ -93,12 +93,12 @@ namespace Modules.States
                 {
                     if (node.nodes.Count > 0)
                     {
-                        node.nodes.Last().states.Add(item);
+                        node.nodes.Last().stateInfos.Add(new StateNode.StateInfo());
                     }
                 }
                 else
                 {
-                    node.nodes.AddLast(new StateNode(item));  
+                    node.nodes.AddLast(new StateNode(new StateNode.StateInfo(isAsync, item)));  
                 }
             }
         }
@@ -112,6 +112,8 @@ namespace Modules.States
                 node.List.Remove(node);
             }
         }
+        
+        public IE
 
         [Obsolete]
         public void OpenPrevious(int layer = 0)
