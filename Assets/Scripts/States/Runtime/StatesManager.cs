@@ -108,8 +108,8 @@ namespace Modules.States
             if (baseNode.TryFindNode<T>(out LinkedListNode<StateNode> node))
             {
                 node.Value.Close();
-                node.Previous?.Value.Open();
                 node.List.Remove(node);
+                node.Previous?.Value.Open();
             }
         }
 
