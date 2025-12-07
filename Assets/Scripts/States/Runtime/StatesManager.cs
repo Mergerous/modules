@@ -112,8 +112,6 @@ namespace Modules.States
                 node.List.Remove(node);
             }
         }
-        
-        public IE
 
         [Obsolete]
         public void OpenPrevious(int layer = 0)
