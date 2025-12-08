@@ -24,7 +24,7 @@ namespace Modules.States
         public void Open(Type type, int layer = 0, StateOptions options = StateOptions.CloseAndRemove)
         {
             IState state = statesList.First(state => state.GetType() == type);
-            Prepare(state, false, layer, options);
+            Prepare(state, layer, options);
             state.Open();
         }
         
@@ -33,7 +33,7 @@ namespace Modules.States
         {
             T state = statesList.OfType<T>().First();
             state.Payload = payload;
-            Prepare(state, false, layer, options);
+            Prepare(state, layer, options);
             state.Open();
         }
 
@@ -43,7 +43,7 @@ namespace Modules.States
         public async Task OpenAsync(Type type, CancellationToken cancellationToken, int layer = 0, StateOptions options = StateOptions.CloseAndRemove)
         {
             IState state = statesList.First(state => state.GetType() == type);
-            Prepare(state, true, layer, options);
+            Prepare(state, layer, options);
             await state.OpenAsync(cancellationToken);
         }
         
@@ -52,7 +52,7 @@ namespace Modules.States
         {
             T state = statesList.OfType<T>().First();
             state.Payload = payload;
-            Prepare(state, true, layer, options);
+            Prepare(state, layer, options);
             await state.OpenAsync(cancellationToken);
         }
         
@@ -60,7 +60,7 @@ namespace Modules.States
             where T : IResultState<TResult>
         {
             T state = statesList.OfType<T>().First();
-            Prepare(state, true, layer, options);
+            Prepare(state, layer, options);
             TResult result = await state.OpenAsync(cancellationToken);
             return result;
         }
@@ -75,7 +75,7 @@ namespace Modules.States
             return result;
         }
 
-        private void Prepare(IState item, bool isAsync, int layer = 0, StateOptions options = StateOptions.CloseAndRemove)
+        private void Prepare(IState item, int layer = 0, StateOptions options = StateOptions.CloseAndRemove)
         {
             if (baseNode.TryGetLast(layer, out StateNode node))
             {
@@ -93,16 +93,31 @@ namespace Modules.States
                 {
                     if (node.nodes.Count > 0)
                     {
-                        node.nodes.Last().stateInfos.Add(new StateNode.StateInfo());
+                        node.nodes.Last().states.Add(item);
                     }
                 }
                 else
                 {
-                    node.nodes.AddLast(new StateNode(new StateNode.StateInfo(isAsync, item)));  
+                    node.nodes.AddLast(new StateNode(item));  
                 }
             }
         }
         
+        public IEnumerable<IState> CloseAndGetPrevious<T>() where T : IState
+        {
+            if (baseNode.TryFindNode<T>(out LinkedListNode<StateNode> node))
+            {
+                node.Value.Close();
+                var previous = node.Previous?.Value.GetStates();
+                node.List.Remove(node);
+
+                return previous;
+            }
+
+            return default;
+        }
+        
+        [Obsolete("Use " + nameof(CloseAndGetPrevious) + " Instead")]
         public void OpenPrevious<T>() where T : IState
         {
             if (baseNode.TryFindNode<T>(out LinkedListNode<StateNode> node))
@@ -112,15 +127,17 @@ namespace Modules.States
                 node.List.Remove(node);
             }
         }
-
-        [Obsolete]
+        
+        
+        [Obsolete("Use " + nameof(CloseAndGetPrevious) + " Instead")]
         public void OpenPrevious(int layer = 0)
         {
             CloseLast(layer);
             OpenLast(layer);
         }
-        
-        [Obsolete]
+
+
+        [Obsolete("Use " + nameof(CloseAndGetPrevious) + " Instead")]
         public void OpenLast(int layer = 0)
         {
             if (baseNode.TryGetLast(layer, out StateNode node))
@@ -129,7 +146,7 @@ namespace Modules.States
             }
         }
         
-        [Obsolete]
+        [Obsolete("Use " + nameof(CloseAndGetPrevious) + " Instead")]
         public void CloseLast(int layer = 0)
         {
             if (baseNode.TryGetLast(layer, out StateNode node))

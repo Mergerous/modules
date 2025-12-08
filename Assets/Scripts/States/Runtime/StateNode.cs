@@ -5,45 +5,26 @@ namespace Modules.States
 {
     public sealed class StateNode
     {
-        public struct StateInfo
-        {
-            public bool isAsync;
-            public IState state;
-
-            public StateInfo(bool isAsync, IState state)
-            {
-                this.isAsync = isAsync;
-                this.state = state;
-            }
-        }
-        
-        public readonly List<StateInfo> stateInfos;
+        public readonly List<IState> states;
         public readonly LinkedList<StateNode> nodes = new();
 
-        public StateNode(params StateInfo[] stateInfos)
+        public StateNode(params IState[] states)
         {
-            if (stateInfos != null)
+            if (states != null)
             {
-                this.stateInfos = new List<StateInfo>(stateInfos);
+                this.states = new List<IState>(states);
             }
             else
             {
-                this.stateInfos = new();
+                this.states = new();
             }
         }
 
         public void Open()
         {
-            foreach (var stateInfo in stateInfos)
+            foreach (var state in states)
             {
-                if (stateInfo.isAsync)
-                {
-                    state.OpenAsync();
-                }
-                else
-                {
-                    state.Open();
-                }
+                state.Open();
             }
             
             foreach (StateNode childNode in nodes)
@@ -52,11 +33,27 @@ namespace Modules.States
             }
         }
 
+        public IEnumerable<IState> GetStates()
+        {
+            foreach (var state in states)
+            {
+                yield return state;
+            }
+            
+            foreach (var childNode in nodes)
+            {
+                foreach (var childState in childNode.GetStates())
+                {
+                    yield return childState;
+                }
+            }
+        }
+
         public void Close()
         {
-            foreach (var stateInfo in stateInfos)
+            foreach (var state in states)
             {
-                stateInfo.state.Close();
+                state.Close();
             }
             
             foreach (StateNode childNode in nodes)
@@ -69,7 +66,7 @@ namespace Modules.States
         {
             foreach (StateNode child in nodes)
             {
-                T result = child.stateInfos.FirstOrDefault(info => info.state.GetType() == typeof(T));
+                T result = child.states.OfType<T>().FirstOrDefault();
                 
                 if (result != null)
                 {
