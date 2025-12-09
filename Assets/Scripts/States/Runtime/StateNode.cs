@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -62,11 +63,11 @@ namespace Modules.States
             }
         }
 
-        public bool TryFindNode<T>(out LinkedListNode<StateNode> node) where T : IState
+        public bool TryFindNode(Type type, ref int depth, out LinkedListNode<StateNode> node)
         {
             foreach (StateNode child in nodes)
             {
-                T result = child.states.OfType<T>().FirstOrDefault();
+                IState result = child.states.FirstOrDefault(state => state.GetType() == type);
                 
                 if (result != null)
                 {
@@ -74,14 +75,20 @@ namespace Modules.States
                     return true;
                 }
                 
-                if(child.TryFindNode<T>(out node))
+                if(child.TryFindNode(type, ref depth, out node))
                 {
+                    depth++;
                     return true;
                 }
             }
 
             node = default;
             return false;
+        }
+
+        public bool TryFindNode<T>(ref int depth, out LinkedListNode<StateNode> node) where T : IState
+        {
+            return TryFindNode(typeof(T), ref depth, out node);
         }
 
         public void Remove(StateNode node)

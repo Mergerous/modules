@@ -23,6 +23,10 @@ namespace Modules.States
 
         public void Open(Type type, int layer = 0, StateOptions options = StateOptions.CloseAndRemove)
         {
+            
+            int depth = 0;
+            if (baseNode.TryFindNode(type, ref depth, out _) && depth == layer) return;
+            
             IState state = statesList.First(state => state.GetType() == type);
             Prepare(state, layer, options);
             state.Open();
@@ -31,6 +35,9 @@ namespace Modules.States
         public void Open<T, TPayload>(TPayload payload, int layer = 0, StateOptions options = StateOptions.CloseAndRemove) 
             where T : IState<TPayload>
         {
+            int depth = 0;
+            if (baseNode.TryFindNode<T>(ref depth, out _) && depth == layer) return;
+            
             T state = statesList.OfType<T>().First();
             state.Payload = payload;
             Prepare(state, layer, options);
@@ -39,9 +46,12 @@ namespace Modules.States
 
         public async Task OpenAsync<T>(CancellationToken cancellationToken, int layer = 0, StateOptions options = StateOptions.CloseAndRemove)
             where T : IState => await OpenAsync(typeof(T), cancellationToken, layer, options);
-
+        
         public async Task OpenAsync(Type type, CancellationToken cancellationToken, int layer = 0, StateOptions options = StateOptions.CloseAndRemove)
         {
+            int depth = 0;
+            if (baseNode.TryFindNode(type, ref depth, out _) && depth == layer) return;
+            
             IState state = statesList.First(state => state.GetType() == type);
             Prepare(state, layer, options);
             await state.OpenAsync(cancellationToken);
@@ -50,6 +60,9 @@ namespace Modules.States
         public async Task OpenAsync<T, TPayload>(TPayload payload, CancellationToken cancellationToken, int layer = 0, StateOptions options = StateOptions.CloseAndRemove) 
             where T : IState<TPayload>
         {
+            int depth = 0;
+            if (baseNode.TryFindNode<T>(ref depth, out _) && depth == layer) return;
+            
             T state = statesList.OfType<T>().First();
             state.Payload = payload;
             Prepare(state, layer, options);
@@ -59,7 +72,11 @@ namespace Modules.States
         public async Task<TResult> OpenAsync<T, TResult>(CancellationToken cancellationToken, int layer = 0, StateOptions options = StateOptions.CloseAndRemove) 
             where T : IResultState<TResult>
         {
+            int depth = 0;
+            if (baseNode.TryFindNode<T>(ref depth, out _) && depth == layer) return default;
+            
             T state = statesList.OfType<T>().First();
+            
             Prepare(state, layer, options);
             TResult result = await state.OpenAsync(cancellationToken);
             return result;
@@ -105,7 +122,8 @@ namespace Modules.States
         
         public IEnumerable<IState> CloseAndGetPrevious<T>() where T : IState
         {
-            if (baseNode.TryFindNode<T>(out LinkedListNode<StateNode> node))
+            var depth = 0;
+            if (baseNode.TryFindNode<T>(ref depth, out LinkedListNode<StateNode> node))
             {
                 node.Value.Close();
                 var previous = node.Previous?.Value.GetStates();
@@ -120,7 +138,8 @@ namespace Modules.States
         [Obsolete("Use " + nameof(CloseAndGetPrevious) + " Instead")]
         public void OpenPrevious<T>() where T : IState
         {
-            if (baseNode.TryFindNode<T>(out LinkedListNode<StateNode> node))
+            var depth = 0;
+            if (baseNode.TryFindNode<T>(ref depth, out LinkedListNode<StateNode> node))
             {
                 node.Value.Close();
                 node.Previous?.Value.Open();
