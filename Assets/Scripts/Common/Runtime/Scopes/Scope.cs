@@ -37,5 +37,16 @@ namespace Modules.Scopes
 
             return default;
         }
+
+        public IEnumerable<T> Get(IEnumerable<Type> types)
+        {
+            foreach (var type in types)
+            {
+                if (elements.TryGetValue(type, out var element))
+                {
+                    yield return element;
+                }
+            }
+        }
     }
 }

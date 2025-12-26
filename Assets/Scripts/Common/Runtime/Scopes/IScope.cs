@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Modules.Scopes
 {
@@ -6,5 +7,6 @@ namespace Modules.Scopes
     {
         public T Get(Type value);
         public T Get<TT>();
+        public IEnumerable<T> Get(IEnumerable<Type> types);
     }
 }
