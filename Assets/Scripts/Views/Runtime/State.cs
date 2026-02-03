@@ -8,6 +8,7 @@ namespace Modules.Views
     public sealed class State
     {
         [field: SerializeField] public bool IsDefault { get; private set; }
+        [field: SerializeField] public bool IsInversed { get; private set; }
         [field: SerializeReference] public Enum Key { get; private set; }
         
         [SerializeReference] private StateComponent[] components;

@@ -53,7 +53,8 @@ namespace Modules.Views
             bool isFlags = key.GetType().GetCustomAttribute(typeof(FlagsAttribute)) != null;
             foreach (State state in states)
             {
-                if ((isFlags && key.HasFlag(state.Key)) || (!isFlags && Equals(state.Key, key)))
+                var matched = (isFlags && key.HasFlag(state.Key)) || (!isFlags && Equals(state.Key, key));
+                if (state.IsInversed ? !matched : matched)
                 {
                     foreach (StateComponent stateBehaviour in state.Components)
                     {
