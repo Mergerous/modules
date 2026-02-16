@@ -8,9 +8,6 @@
   "documentationUrl": "https://example.com/",
   "changelogUrl": "https://example.com/changelog.html",
   "licensesUrl": "https://example.com/licensing.html",
-  "dependencies": {
-    "com.google.firebase.analytics": "12.0.0"
-  },
   "author": {
     "name": "Mergerous",
     "url": "https://github.com/Mergerous"
