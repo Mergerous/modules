@@ -9,7 +9,7 @@
   "changelogUrl": "https://example.com/changelog.html",
   "licensesUrl": "https://example.com/licensing.html",
   "dependencies": {
-    "com.google.firebase.analytics": "12.0.0",
+    "com.google.firebase.analytics": "12.0.0"
   },
   "author": {
     "name": "Mergerous",
